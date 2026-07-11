@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<component-registry basedir="webclient\components"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation='../component-registry.xsd'>
+	
+	<component-descriptor name="script">
+		<property-list>
+			<property name="jsp-filename">
+				<default-value>script</default-value>
+			</property>		
+			<property name="id"><flag name="final" /></property>
+		</property-list>
+	</component-descriptor>
+	
+</component-registry>

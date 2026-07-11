@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<product>	
+	<name>Maximo Javascript Control Addon</name>
+	<version>
+		<major>9</major>
+		<minor>1</minor>
+		<modlevel>0</modlevel>
+		<patch>0</patch>
+		<build>20260616-1530</build>
+	</version>
+	<dbmaxvarname>SWGSCRIPTCTRL</dbmaxvarname>
+	<dbscripts>SCRIPTCONTROL</dbscripts>
+	<dbversion>V9100-04</dbversion>
+	<checklicense>0</checklicense>
+	<lastdbversion>V9100-04</lastdbversion>
+</product>

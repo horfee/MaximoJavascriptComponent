@@ -1,0 +1,13 @@
+# Maven
+/target
+**/target
+
+# IDE
+*.iml
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+
+maximo_libs/

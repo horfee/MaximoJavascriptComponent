@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<control-registry basedir="webclient\controls" package="com.ibm.swg.webclient.controls"
+		xsi:noNamespaceSchemaLocation='../control-registry.xsd'
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+	
+	
+	<control-descriptor name="script" instance-class="com.ibm.swg.webclient.controls.ScriptControl">
+		<property-list>
+			<property name="id"><flag name="final" /></property>
+			<property name="label">
+				<flag name="translatable" />
+			</property>
+			<property name="scriptnum">
+				<flag name="final" />
+			</property>
+			<property name="datasrc">
+				<flag name="nonconditional"/>
+				<flag name="global"/>
+			</property>
+		</property-list>
+		<component-list>
+			<components id="${name}_components_h" layout="horizontal">
+				<script id="${name}"></script>
+			</components>
+				
+		</component-list>
+		<containers>
+			<container name="tab" />
+			<container name="section" />
+			<container name="sectioncol" />
+			<container name="dialog" />
+			<container name="clientarea" />
+			<container name="page" />
+		</containers>
+	</control-descriptor>
+
+</control-registry>

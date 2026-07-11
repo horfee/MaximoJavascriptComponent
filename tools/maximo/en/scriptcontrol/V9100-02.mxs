@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<updatescript version="">
+	<app apptype="webclient" id="swg_scripts">
+		<add container="swg_scripts" control="configurationblock">
+			<set property="id" value="datastore_configurationblock"/>
+		</add>
+		<add before="datastore_configurationblock" container="swg_scripts" control="dialog">
+			<set property="beanclass" value="psdi.webclient.system.beans.ViewBookmarksBean"/>
+			<set property="id" value="searchbook"/>
+			<set property="label" value="Mes signets"/>
+			<set property="mboname" value="SWG_UISCRIPTS"/>
+		</add>
+		<add container="searchbook" control="table">
+			<set property="id" value="bookmarks_table"/>
+			<set property="inputmode" value="readonly"/>
+			<set property="selectmode" value="single"/>
+		</add>
+		<add container="bookmarks_table" control="tablebody">
+			<set property="displayrowsperpage" value="20"/>
+			<set property="filterable" value="true"/>
+			<set property="id" value="bookmarks_table_tablebody"/>
+		</add>
+		<add container="bookmarks_table_tablebody" control="tablecol">
+			<set property="dataattribute" value="SCRIPTNUM"/>
+			<set property="id" value="bookmarks_tablecolumn_1"/>
+			<set property="mxevent" value="selectrecord"/>
+			<set property="type" value="link"/>
+		</add>
+		<add container="bookmarks_table_tablebody" control="tablecol">
+			<set property="dataattribute" value="description"/>
+			<set property="id" value="bookmarks_tablecolumn_2"/>
+		</add>
+		<add container="bookmarks_table_tablebody" control="tablecol">
+			<set property="filterable" value="false"/>
+			<set property="id" value="bookmarks_tablecolumn_3"/>
+			<set property="mxevent" value="instantdelete"/>
+			<set property="mxevent_desc" value="Delete"/>
+			<set property="mxevent_icon" value="btn_delete.gif"/>
+			<set property="sortable" value="false"/>
+			<set property="type" value="event"/>
+		</add>
+		<add container="searchbook" control="buttongroup">
+			<set property="id" value="bookmarks_2"/>
+		</add>
+		<add container="bookmarks_2" control="pushbutton">
+			<set property="default" value="true"/>
+			<set property="id" value="bookmarks_2_1"/>
+			<set property="label" value="OK"/>
+			<set property="mxevent" value="dialogok"/>
+		</add>
+		<add before="searchbook" container="swg_scripts" control="dialog">
+			<set property="beanclass" value="psdi.webclient.system.beans.QbeBean"/>
+			<set property="id" value="searchmore"/>
+			<set property="inputmode" value="query"/>
+			<set property="label" value="More Search Fields"/>
+		</add>
+		<add container="searchmore" control="section">
+			<set property="id" value="searchmore_1"/>
+		</add>
+		<add container="searchmore_1" control="textbox">
+			<set property="dataattribute" value="SCRIPTNUM"/>
+			<set property="id" value="searchmore_attr1"/>
+		</add>
+		<add container="searchmore_1" control="textbox">
+			<set property="dataattribute" value="DESCRIPTION"/>
+			<set property="id" value="searchmore_attr2"/>
+		</add>
+		<add container="searchmore_1" control="textbox">
+			<set property="dataattribute" value="DESCRIPTION_LONGDESCRIPTION"/>
+			<set property="id" value="searchmore_attr4"/>
+		</add>
+		<add container="searchmore_1" control="checkbox">
+			<set property="dataattribute" value="ACTIVE"/>
+			<set property="id" value="searchmore_attr3"/>
+		</add>
+		<add container="searchmore_1" control="radiobuttongroup">
+			<set property="dataattribute" value="type"/>
+			<set property="id" value="1783370272414"/>
+		</add>
+		<add container="1783370272414" control="radiobutton">
+			<set property="id" value="1783370277279"/>
+			<set property="label" value="Javascript"/>
+			<set property="value" value="javascript"/>
+		</add>
+		<add container="1783370272414" control="radiobutton">
+			<set property="id" value="1783370272422"/>
+			<set property="label" value="CSS"/>
+			<set property="value" value="css"/>
+		</add>
+		<add container="searchmore_1" control="checkbox">
+			<set property="dataattribute" value="HASLD"/>
+			<set property="id" value="searchmore_attr5"/>
+		</add>
+		<add container="searchmore_1" control="textbox">
+			<set property="dataattribute" value="SCRIPTCONTENT"/>
+			<set property="id" value="searchmore_attr8"/>
+		</add>
+		<add container="searchmore" control="buttongroup">
+			<set property="id" value="searchmore_buttongroup"/>
+		</add>
+		<add container="searchmore_buttongroup" control="pushbutton">
+			<set property="default" value="true"/>
+			<set property="id" value="searchmore_buttongroup_1"/>
+			<set property="label" value="Find"/>
+			<set property="mxevent" value="dialogok"/>
+		</add>
+		<add container="searchmore_buttongroup" control="pushbutton">
+			<set property="id" value="qbe_restoreappdefault_button"/>
+			<set property="label" value="Restaurer les valeurs par défaut de l'application"/>
+			<set property="mxevent" value="qbeclear"/>
+		</add>
+		<add container="searchmore_buttongroup" control="pushbutton">
+			<set property="id" value="qbe_revisebutton"/>
+			<set property="label" value="Réviser"/>
+			<set property="menutype" value="SEARCHMOREREVISE"/>
+			<set property="targetid" value="searchmore"/>
+		</add>
+		<add container="searchmore_buttongroup" control="pushbutton">
+			<set property="id" value="searchmore_buttongroup_3"/>
+			<set property="label" value="Cancel"/>
+			<set property="mxevent" value="qbecancel"/>
+		</add>
+		<add before="searchmore" container="swg_scripts" control="page">
+			<set property="id" value="mainrec"/>
+			<set property="scroll" value="false"/>
+		</add>
+		<add container="mainrec" control="include">
+			<set property="controltoclone" value="pageHeader"/>
+			<set property="id" value="INCLUDE-pageHeader"/>
+		</add>
+		<add container="mainrec" control="clientarea">
+			<set property="id" value="clientarea"/>
+		</add>
+		<add container="clientarea" control="tabgroup">
+			<set property="id" value="maintabs"/>
+			<set property="style" value="form"/>
+		</add>
+		<add container="maintabs" control="tab">
+			<set property="default" value="true"/>
+			<set property="id" value="results"/>
+			<set property="label" value="List"/>
+			<set property="tabbodycss" value="tabBodyTableStretch"/>
+			<set property="type" value="list"/>
+		</add>
+		<add container="results" control="menubar">
+			<set property="event" value="search"/>
+			<set property="id" value="actiontoolbar1"/>
+			<set property="sourcemethod" value="getAppSearchOptions"/>
+		</add>
+		<add container="results" control="table">
+			<set property="id" value="results_showlist"/>
+			<set property="inputmode" value="readonly"/>
+			<set property="label" value="Scripts"/>
+			<set property="mboname" value="SWG_UISCRIPTS"/>
+			<set property="selectmode" value="multiple"/>
+		</add>
+		<add container="results_showlist" control="tablebody">
+			<set property="displayrowsperpage" value="20"/>
+			<set property="filterable" value="true"/>
+			<set property="filterexpanded" value="true"/>
+			<set property="id" value="results_showlist_tablebody"/>
+		</add>
+		<add container="results_showlist_tablebody" control="tablecol">
+			<set property="dataattribute" value="SCRIPTNUM"/>
+			<set property="filterable" value="false"/>
+			<set property="id" value="results_showlist_column_select"/>
+			<set property="mxevent" value="toggleselectrow"/>
+			<set property="mxevent_desc" value="Select Row {0}"/>
+			<set property="sortable" value="false"/>
+			<set property="type" value="event"/>
+		</add>
+		<add container="results_showlist_tablebody" control="tablecol">
+			<set property="dataattribute" value="SCRIPTNUM"/>
+			<set property="id" value="results_showlist_column_link"/>
+			<set property="mxevent" value="selectrecord"/>
+			<set property="mxevent_desc" value="Go To %1"/>
+			<set property="type" value="link"/>
+			<set property="usefieldsizegroup" value="false"/>
+		</add>
+		<add container="results_showlist_tablebody" control="tablecol">
+			<set property="dataattribute" value="DESCRIPTION"/>
+			<set property="id" value="results_showlist_column1"/>
+		</add>
+		<add container="results_showlist_tablebody" control="tablecol">
+			<set property="dataattribute" value="TYPE"/>
+			<set property="id" value="1783370628483"/>
+			<set property="lookup" value="VALUELIST"/>
+		</add>
+		<add container="results_showlist_tablebody" control="tablecol">
+			<set property="dataattribute" value="ACTIVE"/>
+			<set property="id" value="results_showlist_column2"/>
+		</add>
+		<add container="results_showlist_column2" control="checkbox">
+			<set property="id" value="results_showlist_column2_checkbox"/>
+		</add>
+		<add container="results_showlist_tablebody" control="tablecol">
+			<set property="filterable" value="false"/>
+			<set property="id" value="results_bookmark"/>
+			<set property="mxevent" value="BOOKMARK"/>
+			<set property="mxevent_desc" value="Add to Bookmarks"/>
+			<set property="mxevent_icon" value="btn_addtobookmarks.gif"/>
+			<set property="sortable" value="false"/>
+			<set property="type" value="event"/>
+		</add>
+		<add container="maintabs" control="tab">
+			<set property="id" value="main"/>
+			<set property="label" value="Main"/>
+			<set property="tabbodycss" value="tabBodyTableStretch"/>
+			<set property="type" value="insert"/>
+		</add>
+		<add container="main" control="section">
+			<set property="id" value="maintab_section"/>
+		</add>
+		<add container="maintab_section" control="sectionrow">
+			<set property="id" value="1782911788742"/>
+		</add>
+		<add container="1782911788742" control="sectioncol">
+			<set property="id" value="1782911788745"/>
+		</add>
+		<add container="1782911788745" control="section">
+			<set property="id" value="maintab_section1782911788745subSection"/>
+		</add>
+		<add container="maintab_section1782911788745subSection" control="multiparttextbox">
+			<set property="dataattribute" value="scriptnum"/>
+			<set property="descdataattribute" value="description"/>
+			<set property="desclookup" value="LONGDESC"/>
+			<set property="id" value="1782911725111"/>
+		</add>
+		<add container="1782911788742" control="sectioncol">
+			<set property="id" value="1782911792916"/>
+		</add>
+		<add container="1782911792916" control="checkbox">
+			<set property="dataattribute" value="ACTIVE"/>
+			<set property="id" value="maintab_attr3"/>
+		</add>
+		<add container="1782911792916" control="radiobuttongroup">
+			<set property="dataattribute" value="type"/>
+			<set property="id" value="1782911840079"/>
+		</add>
+		<add container="1782911840079" control="radiobutton">
+			<set property="id" value="1782911840081"/>
+			<set property="label" value="Javascript"/>
+			<set property="value" value="javascript"/>
+		</add>
+		<add container="1782911840079" control="radiobutton">
+			<set property="id" value="1782911843837"/>
+			<set property="label" value="CSS"/>
+			<set property="value" value="css"/>
+		</add>
+		<add container="main" control="section">
+			<set property="id" value="main_script_editor_section"/>
+		</add>
+		<add container="main_script_editor_section" control="miniapp">
+			<set property="appid" value="aceeditor"/>
+			<set property="beanclass" value="com.ibm.tivoli.maximo.miniapps.aceeditor.AceEditorBean"/>
+			<set property="height" value="500"/>
+			<set property="id" value="main_grid2_attr1_5_aceeditor"/>
+			<set property="mainclass" value="AceEditor"/>
+			<set property="options" value="dataattribute: 'SCRIPTCONTENT'"/>
+			<set property="progressindicator" value="false"/>
+			<set property="width" value="600"/>
+		</add>
+		<add container="mainrec" control="include">
+			<set property="controltoclone" value="pageFooter"/>
+			<set property="id" value="INCLUDE-pageFooter"/>
+		</add>
+	</app>
+</updatescript>

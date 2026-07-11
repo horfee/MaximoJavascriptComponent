@@ -1,0 +1,60 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>maximo.swg</groupId>
+    <artifactId>javascriptctrl</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+
+    <name>Maximo Root project</name>
+    <description>Parent Maven build for Maximo application and tool modules.</description>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <modules>
+        <module>applications/maximo</module>
+        <module>tools/maximo</module>
+    </modules>
+    <profiles>
+        <profile>
+            <id>assemble-output</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>3.1.0</version>
+                        <executions>
+                            <execution>
+                                <id>assemble-without-src</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <target>
+                                        <echo>Assembling project tree excluding src directories into ${project.build.directory}/assembled</echo>
+                                        <mkdir dir="${project.build.directory}/assembled"/>
+                                        <copy todir="${project.build.directory}/assembled" verbose="true" preservelastmodified="true">
+                                            <fileset dir="${basedir}">
+                                                <exclude name="**/src/**"/>
+                                                <exclude name="${project.build.directory}/assembled/**"/>
+                                                <exclude name="**/.git/**"/>
+                                            </fileset>
+                                        </copy>
+                                    </target>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>
