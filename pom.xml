@@ -12,8 +12,7 @@
     <description>Parent Maven build for Maximo application and tool modules.</description>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <mavent.compiler.release>17</mavent.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -24,6 +23,9 @@
     <profiles>
         <profile>
             <id>assemble-output</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <build>
                 <plugins>
                     <plugin>
@@ -40,14 +42,35 @@
                                 <configuration>
                                     <target>
                                         <echo>Assembling project tree excluding src directories into ${project.build.directory}/assembled</echo>
-                                        <mkdir dir="${project.build.directory}/assembled"/>
-                                        <copy todir="${project.build.directory}/assembled" verbose="true" preservelastmodified="true">
+                                        <mkdir dir="${project.build.directory}/assembled/SMP/maximo"/>
+                                        <copy todir="${project.build.directory}/assembled/SMP/maximo" verbose="true" preservelastmodified="true">
                                             <fileset dir="${basedir}">
                                                 <exclude name="**/src/**"/>
                                                 <exclude name="${project.build.directory}/assembled/**"/>
                                                 <exclude name="**/.git/**"/>
+                                                <exclude name="maximo_libs/"/>
+                                                <exclude name="**/target/"/>
+                                                <exclude name="**/**/pom.xml"/>
+                                                <exclude name="README.md"/>
+                                                <exclude name=".github/"/>
+                                                <exclude name=".vscode/"/>
+                                                <exclude name="**/**/*.xsd"/>
+                                                <exclude name="**/**/*.dtd"/>
                                             </fileset>
                                         </copy>
+                                    </target>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>zip-assembled</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <target>
+                                        <echo>Zipping assembled folder into ${project.build.directory}/MaximoJavaScriptControl-${project.version}.zip</echo>
+                                        <zip destfile="${project.build.directory}/MaximoJavaScriptControl-${project.version}.zip" basedir="${project.build.directory}/assembled"/>
                                     </target>
                                 </configuration>
                             </execution>

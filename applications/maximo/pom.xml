@@ -13,6 +13,7 @@
     <artifactId>application</artifactId>
     <name>Maximo Application</name>
     <description>UI and MBO for Maximo javascript control.</description>
+    <packaging>pom</packaging>
 
     
     <build>
