@@ -3,7 +3,7 @@
 
   
 
-This repository is used to create a new controls in Maximo, usable in standard user interface (not in RBA).
+This repository is used to create a new control in Maximo, usable in standard user interface (not in RBA).
 
 It is meant to be used as customization archive to push in your MAS Manage deployment.
 
