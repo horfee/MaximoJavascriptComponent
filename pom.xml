@@ -42,8 +42,8 @@
                                 <configuration>
                                     <target>
                                         <echo>Assembling project tree excluding src directories into ${project.build.directory}/assembled</echo>
-                                        <mkdir dir="${project.build.directory}/assembled/SMP/maximo"/>
-                                        <copy todir="${project.build.directory}/assembled/SMP/maximo" verbose="true" preservelastmodified="true">
+                                        <mkdir dir="${project.build.directory}/assembled/"/>
+                                        <copy todir="${project.build.directory}/assembled/" verbose="true" preservelastmodified="true">
                                             <fileset dir="${basedir}">
                                                 <exclude name="**/src/**"/>
                                                 <exclude name="${project.build.directory}/assembled/**"/>

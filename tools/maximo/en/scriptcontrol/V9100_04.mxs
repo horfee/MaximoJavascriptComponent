@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <updatescript version="7.1.0.0">
 	<systemlib apptype="webclient" id="toolbox">
-		<add container="toolbox" control="script">
+		<add control="script" before="ctrl_powerapp" container="toolbox">
 			<set property="id" value="ctrl_script"/>
 		</add>
 	</systemlib>

@@ -17,6 +17,27 @@
 
 
     <dependencies>
+        <dependency>
+            <groupId>com.maximo.external</groupId>
+            <artifactId>businessobjects</artifactId>
+            <version>1.0.0</version>
+            <scope>system</scope>
+            <systemPath>/Users/horfee/Developpement/MaximoJavascriptComponent/maximo_libs/businessobjects.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.maximo.external</groupId>
+            <artifactId>tools</artifactId>
+            <version>1.0.0</version>
+            <scope>system</scope>
+            <systemPath>/Users/horfee/Developpement/MaximoJavascriptComponent/maximo_libs/MaximoTools.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.maximo.external</groupId>
+            <artifactId>jdom</artifactId>
+            <version>1.0.0</version>
+            <scope>system</scope>
+            <systemPath>/Users/horfee/Developpement/MaximoJavascriptComponent/maximo_libs/jdom.jar</systemPath>
+        </dependency>
         <!-- Add module-specific dependencies here -->
     </dependencies>
     <build>
@@ -36,7 +57,7 @@
                             <compileSourceRoots>
                                 <compileSourceRoot>${project.basedir}/src</compileSourceRoot>
                             </compileSourceRoots>
-                            <outputDirectory>${project.basedir}/en/classes</outputDirectory>
+                            <outputDirectory>${project.basedir}/classes</outputDirectory>
                             <includes>
                                 <include>**/*.java</include>
                             </includes>

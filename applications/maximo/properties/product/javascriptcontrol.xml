@@ -9,7 +9,7 @@
 		<build>20260616-1530</build>
 	</version>
 	<dbmaxvarname>SWGSCRIPTCTRL</dbmaxvarname>
-	<dbscripts>SCRIPTCONTROL</dbscripts>
+	<dbscripts>scriptcontrol</dbscripts>
 	<dbversion>V9100-04</dbversion>
 	<checklicense>0</checklicense>
 	<lastdbversion>V9100-04</lastdbversion>

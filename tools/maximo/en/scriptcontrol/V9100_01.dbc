@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script SYSTEM "script.dtd">
+<script author="ALEXANDRE" scriptname="SCRIPTCONTROL">
+  <description></description>
+  <statements>
+
+    <specify_aln_domain domainid="SWG_SCRIPTTYPE" description="UI Script types" length="12" maxtype="ALN">
+        <alnvalueinfo value="JAVASCRIPT" description="JavaScript" />
+        <alnvalueinfo value="CSS" description="CSS" />
+    </specify_aln_domain>
+
+    <define_table type="system" persistent="true" object="SWG_UISCRIPTS" description="Custom scripts embedded in regular applications" service="CUSTAPP" classname="psdi.mbo.custapp.CustomMboSet" mainobject="false" internal="false" trigroot="SWG_UISCRIPTS" primarykey="SCRIPTNUM">
+      <attrdef attribute="SWG_UISCRIPTSID" maxtype="BIGINT" length="19" persistent="true" haslongdesc="false" required="true" userdefined="false" title="Unique ID" remarks="~null~" mustbe="true" ispositive="false" scale="0" canautonum="false" searchtype="EXACT" localizable="false" restricted="false" />
+      <attrdef attribute="DESCRIPTION" maxtype="ALN" length="50" persistent="true" haslongdesc="true" required="false" userdefined="false" title="Description" remarks="~null~" mustbe="false" ispositive="false" scale="0" canautonum="false" searchtype="WILDCARD" localizable="true" restricted="false" />
+      <attrdef attribute="SCRIPTNUM" maxtype="UPPER" length="20" persistent="true" haslongdesc="false" required="true" userdefined="false" defaultvalue="&amp;AUTOKEY&amp;" title="Script" remarks="~null~" mustbe="false" ispositive="false" scale="0" autokey="SWG_UISCRIPTSNUM" canautonum="true" searchtype="WILDCARD" localizable="false" restricted="false" />
+      <attrdef attribute="SCRIPTCONTENT" maxtype="CLOB" length="999999" persistent="true" haslongdesc="false" required="false" userdefined="false" title="Script content" remarks="CSS or javascript payload" mustbe="false" ispositive="false" scale="0" canautonum="false" searchtype="WILDCARD" localizable="false" restricted="false" />
+      <attrdef attribute="ACTIVE" maxtype="YORN" length="1" persistent="true" haslongdesc="false" required="true" userdefined="false" defaultvalue="0" title="Active" remarks="Flag to indicate if the script must be considered or not" mustbe="false" ispositive="false" scale="0" canautonum="false" searchtype="EXACT" localizable="false" restricted="false" />
+      <attrdef attribute="TYPE" maxtype="UPPER" length="12" persistent="true" haslongdesc="false" required="true" userdefined="false" domain="SWG_SCRIPTTYPE" defaultvalue="JAVASCRIPT" title="Type" remarks="Type of script. one of CSS|JAVASCRIPT" mustbe="false" ispositive="false" scale="0" canautonum="false" searchtype="EXACT" localizable="true" restricted="false" />
+      <attrdef attribute="SCRIPTLANGUAGE" maxtype="ALN" length="50" persistent="false" haslongdesc="false" required="false" userdefined="false" title="Language" remarks="Script language ; used to enable color syntax feature" mustbe="false" ispositive="false" scale="0" canautonum="false" searchtype="NONE" localizable="false" restricted="false" />
+    </define_table>
+
+    <create_app app="SWG_SCRIPTS" description="User Interface scripts" maintbname="SWG_UISCRIPTS" orderby="SCRIPTNUM"/>
+
+    <add_sigoption app="SWG_SCRIPTS" optionname="READ" langcode="EN" esigenabled="false" visible="true" description="Read access to script" grantapp="DESIGNER" grantoption="READ" alsogrants="CLEAR,BOOKMARK,NEXT,PREVIOUS" alsorevokes="ALL" />
+    <add_sigoption app="SWG_SCRIPTS" optionname="SAVE" langcode="EN" esigenabled="false" visible="true" description="Save script" grantapp="DESIGNER" grantoption="SAVE" alsorevokes="INSERT,DUPLICATE, DELETE" />
+    <add_sigoption app="SWG_SCRIPTS" optionname="BMXVIEWMANAGEWHER" langcode="EN" esigenabled="false" visible="true" description="Sigoption to control the visibility of the Detail section in View/Manage Queries dialog" grantapp="DESIGNER" grantoption="SAVE" />
+    <add_sigoption app="SWG_SCRIPTS" optionname="BMXVIEWMANAGEWHERRO" langcode="EN" esigenabled="false" visible="true" description="Sigoption to control the editability of the Clause field in View/Manage Queries dialog" grantapp="DESIGNER" grantoption="SAVE" />
+    <add_sigoption app="SWG_SCRIPTS" optionname="BOOKMARK" langcode="EN" esigenabled="false" visible="false" description="Add to Bookmarks" grantapp="DESIGNER" grantoption="READ" />
+    <add_sigoption app="SWG_SCRIPTS" optionname="CLEAR" langcode="EN" esigenabled="false" visible="false" description="Clear Changes" grantapp="DESIGNER" grantoption="CLEAR" />
+    <add_sigoption app="SWG_SCRIPTS" optionname="DELETE" langcode="EN" esigenabled="false" visible="true" description="Delete script" grantapp="DESIGNER" grantoption="SAVE" prerequisite="SAVE" />
+    <add_sigoption app="SWG_SCRIPTS" optionname="DUPLICATE" langcode="EN" esigenabled="false" visible="true" description="Duplicate script" grantapp="DESIGNER" grantoption="INSERT" prerequisite="INSERT" />
+    <add_sigoption app="SWG_SCRIPTS" optionname="INSERT" langcode="EN" esigenabled="false" visible="true" description="New script" grantapp="DESIGNER" grantoption="INSERT" alsogrants="SAVE" alsorevokes="DUPLICATE" />
+    <add_sigoption app="SWG_SCRIPTS" optionname="NEXT" langcode="EN" esigenabled="false" visible="false" description="Next script" grantapp="DESIGNER" grantoption="NEXT" />
+    <add_sigoption app="SWG_SCRIPTS" optionname="PREVIOUS" langcode="EN" esigenabled="false" visible="false" description="Previous script" grantapp="DESIGNER" grantoption="PREVIOUS" />
+    <add_sigoption app="SWG_SCRIPTS" optionname="SEARCHBOOK" langcode="EN" esigenabled="false" visible="true" description="Bookmarks" grantapp="DESIGNER" grantoption="READ" />
+    <add_sigoption app="SWG_SCRIPTS" optionname="SEARCHMORE" langcode="EN" esigenabled="false" visible="true" description="More Search Fields" grantapp="DESIGNER" grantoption="READ" />
+    <add_sigoption app="SWG_SCRIPTS" optionname="SEARCHSQRY" langcode="EN" esigenabled="false" visible="true" description="Save Current Query" grantapp="DESIGNER" grantoption="READ" />
+    <add_sigoption app="SWG_SCRIPTS" optionname="SEARCHTIPS" langcode="EN" esigenabled="false" visible="true" description="View Search Tips" grantapp="DESIGNER" grantoption="READ" />
+    <add_sigoption app="SWG_SCRIPTS" optionname="SEARCHVMQR" langcode="EN" esigenabled="false" visible="true" description="View/Manage Queries" grantapp="DESIGNER" grantoption="READ" />
+    <add_sigoption app="SWG_SCRIPTS" optionname="SEARCHWHER" langcode="EN" esigenabled="false" visible="true" description="Where Clause" grantapp="DESIGNER" grantoption="READ" />
+
+    <create_app_menu app="SWG_SCRIPTS" type="action" >
+      <app_menu_option option="DUPLICATE" tabdisplay="MAIN"/>
+      <app_menu_option option="DELETE" tabdisplay="MAIN" />
+      <app_menu_option option="BOOKMARK" tabdisplay="MAIN" />
+      <menu_separator/>
+			<app_menu_option option="RUNREPORTS" tabdisplay="ALL" />
+    </create_app_menu>
+
+    <create_app_menu app="SWG_SCRIPTS" type="tool">
+      <app_menu_option option="INSERT" tabdisplay="LIST" accesskey="CTRL+ALT+I" image="nav_icon_insert.gif"/>
+      <app_menu_option option="SAVE" tabdisplay="MAIN" accesskey="CTRL+ALT+S" image="nav_icon_save.gif" />
+      <app_menu_option option="CLEAR" tabdisplay="MAIN" accesskey="CTRL+ALT+C" image="nav_icon_clear.gif" />
+      <app_menu_option option="PREVIOUS" tabdisplay="MAIN" accesskey="CTRL+ALT+P" image="nav_icon_previous.gif" />
+      <app_menu_option option="NEXT" tabdisplay="MAIN" accesskey="CTRL+ALT+N" image="nav_icon_next.gif" />
+      <menu_separator/>
+    </create_app_menu>
+    <create_app_menu app="SWG_SCRIPTS" type="search">
+      <app_menu_header headerdescription="Advanced Search" image="atb_search.gif">
+        <app_menu_option option="SEARCHMORE" tabdisplay="LIST" />
+        <app_menu_option option="SEARCHWHER" tabdisplay="LIST" />
+        <app_menu_option option="SEARCHTIPS" tabdisplay="LIST" />
+      </app_menu_header>
+      <app_menu_header headerdescription="Save Query" image="atb_save.gif">
+        <app_menu_option option="SEARCHSQRY" tabdisplay="LIST" />
+        <app_menu_option option="SEARCHVMQR" tabdisplay="LIST" />
+      </app_menu_header>
+      <app_menu_option option="SEARCHBOOK" tabdisplay="LIST" image="atb_bookmark.gif"/>
+    </create_app_menu>
+
+    <module_app module="UTIL" app="SWG_SCRIPTS" menu_position="last" />
+
+    <define_table type="system" persistent="false" object="CTRL_SCRIPTCONTROL" description="Script Control" service="APPSETUP" classname="psdi.app.designer.virtual.ControlSet" mainobject="false" internal="true">
+      <attrdef attribute="ID" maxtype="ALN" length="128" persistent="false" haslongdesc="false" required="true" userdefined="false" title="Control ID" remarks="Control ID" sameasobject="MAXLABELS" sameasattribute="ID" mustbe="false" ispositive="false" scale="0" canautonum="false" searchtype="NONE" localizable="false" restricted="false" />
+      <attrdef attribute="SCRIPTNUM" maxtype="UPPER" length="128" persistent="false" haslongdesc="false" required="false" userdefined="false" title="Script" remarks="" sameasobject="SWG_UISCRIPTS" sameasattribute="SCRIPTNUM" mustbe="true" ispositive="false" scale="0" canautonum="false" searchtype="NONE" localizable="false" restricted="false" />
+      <attrdef attribute="DATASRC" maxtype="ALN" length="128" persistent="false" haslongdesc="false" required="false" userdefined="false" title="Data source" remarks="" sameasobject="MAXLABELS" sameasattribute="ID" mustbe="true" ispositive="false" scale="0" canautonum="false" searchtype="NONE" localizable="false" restricted="false" />
+    </define_table>
+
+    <insert table="PALETTEITEM" ignore_duplicates="true">
+      <insertrow>
+        <columnvalue column="CONTROL" string="SCRIPT" />
+        <columnvalue column="OBJECTNAME" string="CTRL_SCRIPTCONTROL" />
+        <columnvalue column="DESCRIPTION" string="Script Js/CSS" />
+        <columnvalue column="LANGCODE" string="EN" />
+      </insertrow>
+    </insert>
+
+    
+  </statements>
+</script>
