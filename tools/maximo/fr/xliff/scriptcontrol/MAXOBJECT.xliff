@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<xliff version='1.1' xmlns='urn:oasis:names:tc:xliff:document:1.1' xmlns:sup='maximo'>
+ <file original='MAXOBJECT.xliff' source-language='en' target-language='fr' datatype='plaintext'>
+  <group>
+   <sup:SourceInfo>
+    <sup:Table>MAXOBJECT</sup:Table>
+    <sup:ID-col>OBJECTNAME</sup:ID-col>
+   </sup:SourceInfo>
+   <trans-unit id='10000' size-unit='char' maxwidth='100'>
+    <source>Custom scripts embedded in regular applications</source>
+    <target>Scripts personnalisés inclut dans les applications classiques</target>
+    <sup:Reference Type='Column'>DESCRIPTION</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_UISCRIPTS</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+
+   <trans-unit id='10001' size-unit='char' maxwidth='100'>
+    <source>Script Control</source>
+    <target>Contrôle script</target>
+    <sup:Reference Type='Column'>DESCRIPTION</sup:Reference>
+    <sup:Reference Type='DatabaseID'>CTRL_SCRIPTCONTROL</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-03</sup:Reference>
+   </trans-unit>
+  </group>
+  </file>
+</xliff>

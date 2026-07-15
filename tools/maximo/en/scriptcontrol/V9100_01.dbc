@@ -10,9 +10,9 @@
     </specify_aln_domain>
 
     <define_table type="system" persistent="true" object="SWG_UISCRIPTS" description="Custom scripts embedded in regular applications" service="CUSTAPP" classname="psdi.mbo.custapp.CustomMboSet" mainobject="false" internal="false" trigroot="SWG_UISCRIPTS" primarykey="SCRIPTNUM">
-      <attrdef attribute="SWG_UISCRIPTSID" maxtype="BIGINT" length="19" persistent="true" haslongdesc="false" required="true" userdefined="false" title="Unique ID" remarks="~null~" mustbe="true" ispositive="false" scale="0" canautonum="false" searchtype="EXACT" localizable="false" restricted="false" />
-      <attrdef attribute="DESCRIPTION" maxtype="ALN" length="50" persistent="true" haslongdesc="true" required="false" userdefined="false" title="Description" remarks="~null~" mustbe="false" ispositive="false" scale="0" canautonum="false" searchtype="WILDCARD" localizable="true" restricted="false" />
-      <attrdef attribute="SCRIPTNUM" maxtype="UPPER" length="20" persistent="true" haslongdesc="false" required="true" userdefined="false" defaultvalue="&amp;AUTOKEY&amp;" title="Script" remarks="~null~" mustbe="false" ispositive="false" scale="0" autokey="SWG_UISCRIPTSNUM" canautonum="true" searchtype="WILDCARD" localizable="false" restricted="false" />
+      <attrdef attribute="SWG_UISCRIPTSID" maxtype="BIGINT" length="19" persistent="true" haslongdesc="false" required="true" userdefined="false" title="Unique ID" remarks="Unique identifier" mustbe="true" ispositive="false" scale="0" canautonum="false" searchtype="EXACT" localizable="false" restricted="false" />
+      <attrdef attribute="DESCRIPTION" maxtype="ALN" length="50" persistent="true" haslongdesc="true" required="false" userdefined="false" title="Description" remarks="Small description" mustbe="false" ispositive="false" scale="0" canautonum="false" searchtype="WILDCARD" localizable="true" restricted="false" />
+      <attrdef attribute="SCRIPTNUM" maxtype="UPPER" length="20" persistent="true" haslongdesc="false" required="true" userdefined="false" defaultvalue="&amp;AUTOKEY&amp;" title="Script" remarks="Script number" mustbe="false" ispositive="false" scale="0" autokey="SWG_UISCRIPTSNUM" canautonum="true" searchtype="WILDCARD" localizable="false" restricted="false" />
       <attrdef attribute="SCRIPTCONTENT" maxtype="CLOB" length="999999" persistent="true" haslongdesc="false" required="false" userdefined="false" title="Script content" remarks="CSS or javascript payload" mustbe="false" ispositive="false" scale="0" canautonum="false" searchtype="WILDCARD" localizable="false" restricted="false" />
       <attrdef attribute="ACTIVE" maxtype="YORN" length="1" persistent="true" haslongdesc="false" required="true" userdefined="false" defaultvalue="0" title="Active" remarks="Flag to indicate if the script must be considered or not" mustbe="false" ispositive="false" scale="0" canautonum="false" searchtype="EXACT" localizable="false" restricted="false" />
       <attrdef attribute="TYPE" maxtype="UPPER" length="12" persistent="true" haslongdesc="false" required="true" userdefined="false" domain="SWG_SCRIPTTYPE" defaultvalue="JAVASCRIPT" title="Type" remarks="Type of script. one of CSS|JAVASCRIPT" mustbe="false" ispositive="false" scale="0" canautonum="false" searchtype="EXACT" localizable="true" restricted="false" />
@@ -68,23 +68,64 @@
       <app_menu_option option="SEARCHBOOK" tabdisplay="LIST" image="atb_bookmark.gif"/>
     </create_app_menu>
 
-    <module_app module="UTIL" app="SWG_SCRIPTS" menu_position="last" />
+    <module_app module="UTIL" app="SWG_SCRIPTS" menu_position="before" menu_pos_param="DBINFO"/> 
 
-    <define_table type="system" persistent="false" object="CTRL_SCRIPTCONTROL" description="Script Control" service="APPSETUP" classname="psdi.app.designer.virtual.ControlSet" mainobject="false" internal="true">
-      <attrdef attribute="ID" maxtype="ALN" length="128" persistent="false" haslongdesc="false" required="true" userdefined="false" title="Control ID" remarks="Control ID" sameasobject="MAXLABELS" sameasattribute="ID" mustbe="false" ispositive="false" scale="0" canautonum="false" searchtype="NONE" localizable="false" restricted="false" />
-      <attrdef attribute="SCRIPTNUM" maxtype="UPPER" length="128" persistent="false" haslongdesc="false" required="false" userdefined="false" title="Script" remarks="" sameasobject="SWG_UISCRIPTS" sameasattribute="SCRIPTNUM" mustbe="true" ispositive="false" scale="0" canautonum="false" searchtype="NONE" localizable="false" restricted="false" />
-      <attrdef attribute="DATASRC" maxtype="ALN" length="128" persistent="false" haslongdesc="false" required="false" userdefined="false" title="Data source" remarks="" sameasobject="MAXLABELS" sameasattribute="ID" mustbe="true" ispositive="false" scale="0" canautonum="false" searchtype="NONE" localizable="false" restricted="false" />
-    </define_table>
 
-    <insert table="PALETTEITEM" ignore_duplicates="true">
+    <insert table="AUTOSCRIPT" ignore_duplicates="true">
       <insertrow>
-        <columnvalue column="CONTROL" string="SCRIPT" />
-        <columnvalue column="OBJECTNAME" string="CTRL_SCRIPTCONTROL" />
-        <columnvalue column="DESCRIPTION" string="Script Js/CSS" />
-        <columnvalue column="LANGCODE" string="EN" />
+        <columnvalue column="AUTOSCRIPT" string="SWG_UISCRIPTLGTYPE" />
+        <columnvalue column="STATUS" string="Active" />
+        <columnvalue column="SOURCE" string="scriptType = langType" />
+        <columnvalue column="SCRIPTLANGUAGE" string="jython" />
+        <columnvalue column="USERDEFINED" boolean="true" />
+        <columnvalue column="LOGLEVEL" string="ERROR" />
+        <columnvalue column="INTERFACE" boolean="false" />
+        <columnvalue column="ACTIVE" boolean="true" />
+      </insertrow>
+    </insert>
+    <insert table="AUTOSCRIPTVARS" ignore_duplicates="true">
+      <insertrow>
+        <columnvalue column="AUTOSCRIPT" string="SWG_UISCRIPTLGTYPE" />
+        <columnvalue column="VARNAME" string="langType" />
+        <columnvalue column="VARBINDINGTYPE" string="ATTRIBUTE" />
+        <columnvalue column="VARTYPE" string="IN" />
+        <columnvalue column="ALLOWOVERRIDE" boolean="true" />
+        <columnvalue column="ACCESSFLAG" number="0" />
+      </insertrow>
+      <insertrow>
+        <columnvalue column="AUTOSCRIPT" string="SWG_UISCRIPTLGTYPE" />
+        <columnvalue column="VARNAME" string="scriptType" />
+        <columnvalue column="VARBINDINGTYPE" string="ATTRIBUTE" />
+        <columnvalue column="VARTYPE" string="OUT" />
+        <columnvalue column="ALLOWOVERRIDE" boolean="true" />
+        <columnvalue column="ACCESSFLAG" number="0" />
+      </insertrow>
+    </insert>
+    <insert table="SCRIPTLAUNCHPOINT" ignore_duplicates="true">
+      <insertrow>
+        <columnvalue column="LAUNCHPOINTNAME" string="SWG_UISCRIPTLGTYPE" />
+        <columnvalue column="AUTOSCRIPT" string="SWG_UISCRIPTLGTYPE" />
+        <columnvalue column="LAUNCHPOINTTYPE" string="ATTRIBUTE" />
+        <columnvalue column="OBJECTNAME" string="SWG_UISCRIPTS" />
+        <columnvalue column="OBJECTEVENT" number="2" />
+        <columnvalue column="ATTRIBUTENAME" string="SCRIPTLANGUAGE" />
+        <columnvalue column="ACTIVE" boolean="true" />
+      </insertrow>
+    </insert>
+    <insert table="LAUNCHPOINTVARS" ignore_duplicates="true">
+      <insertrow>
+        <columnvalue column="LAUNCHPOINTNAME" string="SWG_UISCRIPTLGTYPE" />
+        <columnvalue column="AUTOSCRIPT" string="SWG_UISCRIPTLGTYPE" />
+        <columnvalue column="VARNAME" string="langType" />
+        <columnvalue column="VARBINDINGVALUE" string="type" />
+      </insertrow>
+      <insertrow>
+        <columnvalue column="LAUNCHPOINTNAME" string="SWG_UISCRIPTLGTYPE" />
+        <columnvalue column="AUTOSCRIPT" string="SWG_UISCRIPTLGTYPE" />
+        <columnvalue column="VARNAME" string="scriptType" />
+        <columnvalue column="VARBINDINGVALUE" string="scriptlanguage" />
       </insertrow>
     </insert>
 
-    
   </statements>
 </script>

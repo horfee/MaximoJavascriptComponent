@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<xliff version='1.1' xmlns='urn:oasis:names:tc:xliff:document:1.1' xmlns:sup='maximo'>
+ <file original='MAXLABELS.xliff' source-language='en' target-language='fr' datatype='plaintext'>
+  <group>
+   <sup:SourceInfo>
+    <sup:Table>MAXLABELS</sup:Table>
+    <sup:ID-col>APP:ID:PROPERTY</sup:ID-col>
+   </sup:SourceInfo>
+   <trans-unit id='100000' size-unit='char' maxwidth='4000'>
+    <source>My bookmarks</source>
+    <target>Mes signets</target>
+    <sup:Reference Type='Column'>VALUE</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_SCRIPTS:searchbook:label</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-02</sup:Reference>
+   </trans-unit>
+   <trans-unit id='100001' size-unit='char' maxwidth='4000'>
+    <source>Ok</source>
+    <target>Ok</target>
+    <sup:Reference Type='Column'>VALUE</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_SCRIPTS:bookmarks_2:label</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-02</sup:Reference>
+   </trans-unit>
+   <trans-unit id='100002' size-unit='char' maxwidth='4000'>
+    <source>More Search Fields bookmarks</source>
+    <target>Plus de zones de recherche</target>
+    <sup:Reference Type='Column'>VALUE</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_SCRIPTS:searchmore:label</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-02</sup:Reference>
+   </trans-unit>
+
+   <trans-unit id='100003' size-unit='char' maxwidth='4000'>
+    <source>Javascript</source>
+    <target>Javascript</target>
+    <sup:Reference Type='Column'>VALUE</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_SCRIPTS:1783370277279:label</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-02</sup:Reference>
+   </trans-unit>
+   <trans-unit id='100004' size-unit='char' maxwidth='4000'>
+    <source>CSS</source>
+    <target>CSS</target>
+    <sup:Reference Type='Column'>VALUE</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_SCRIPTS:1783370272422:label</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-02</sup:Reference>
+   </trans-unit>
+
+  <trans-unit id='100005' size-unit='char' maxwidth='4000'>
+    <source>Find</source>
+    <target>Chercher</target>
+    <sup:Reference Type='Column'>VALUE</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_SCRIPTS:searchmore_buttongroup_1:label</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-02</sup:Reference>
+   </trans-unit>
+
+  <trans-unit id='100006' size-unit='char' maxwidth='4000'>
+    <source>Restore Application Defaults</source>
+    <target>Restaurer les valeurs par défaut de l'application</target>
+    <sup:Reference Type='Column'>VALUE</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_SCRIPTS:qbe_restoreappdefault_button:label</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-02</sup:Reference>
+   </trans-unit>
+
+   <trans-unit id='100007' size-unit='char' maxwidth='4000'>
+    <source>Revise</source>
+    <target>Réviser</target>
+    <sup:Reference Type='Column'>VALUE</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_SCRIPTS:qbe_revisebutton:label</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-02</sup:Reference>
+   </trans-unit>
+
+   <trans-unit id='100008' size-unit='char' maxwidth='4000'>
+    <source>Cancel</source>
+    <target>Annuler</target>
+    <sup:Reference Type='Column'>VALUE</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_SCRIPTS:searchmore_buttongroup_3:label</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-02</sup:Reference>
+   </trans-unit>
+
+   <trans-unit id='100009' size-unit='char' maxwidth='4000'>
+    <source>List</source>
+    <target>Liste</target>
+    <sup:Reference Type='Column'>VALUE</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_SCRIPTS:results:label</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-02</sup:Reference>
+   </trans-unit>
+
+   <trans-unit id='100010' size-unit='char' maxwidth='4000'>
+    <source>Scripts</source>
+    <target>Scripts</target>
+    <sup:Reference Type='Column'>VALUE</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_SCRIPTS:results_showlist:label</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-02</sup:Reference>
+   </trans-unit>
+
+   <trans-unit id='100011' size-unit='char' maxwidth='4000'>
+    <source>Script</source>
+    <target>Script</target>
+    <sup:Reference Type='Column'>VALUE</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_SCRIPTS:main:label</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-02</sup:Reference>
+   </trans-unit>
+
+   <trans-unit id='100012' size-unit='char' maxwidth='4000'>
+    <source>Javascript</source>
+    <target>Javascript</target>
+    <sup:Reference Type='Column'>VALUE</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_SCRIPTS:1782911840081:label</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-02</sup:Reference>
+   </trans-unit>
+   <trans-unit id='100013' size-unit='char' maxwidth='4000'>
+    <source>CSS</source>
+    <target>CSS</target>
+    <sup:Reference Type='Column'>VALUE</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_SCRIPTS:1782911843837:label</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-02</sup:Reference>
+   </trans-unit>
+
+   <trans-unit id='100014' size-unit='char' maxwidth='4000'>
+    <source>Script</source>
+    <target>Script</target>
+    <sup:Reference Type='Column'>VALUE</sup:Reference>
+    <sup:Reference Type='DatabaseID'>DESIGNER:mxdproperties_script:label</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-04</sup:Reference>
+   </trans-unit>
+  </group>
+ </file>
+</xliff>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<xliff version='1.1' xmlns='urn:oasis:names:tc:xliff:document:1.1' xmlns:sup='maximo'>
+ <file original='MAXAPPS.xliff' source-language='en' target-language='fr' datatype='plaintext'>
+  <group>
+   <sup:SourceInfo>
+    <sup:Table>MAXAPPS</sup:Table>
+    <sup:ID-col>APP</sup:ID-col>
+   </sup:SourceInfo>
+   <trans-unit id='100000' size-unit='char' maxwidth='100'>
+    <source>User Interface scripts</source>
+    <target>Scripts d'interface utilisateur</target>
+    <sup:Reference Type='Column'>DESCRIPTION</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_SCRIPTS</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+  </group>
+ </file>
+</xliff>

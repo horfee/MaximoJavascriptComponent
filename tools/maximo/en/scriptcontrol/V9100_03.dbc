@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script SYSTEM "script.dtd">
+<script author="ALEXANDRE" scriptname="SCRIPTCONTROL">
+  <description></description>
+  <statements>
+
+    <define_table type="system" persistent="false" object="CTRL_SCRIPTCONTROL" description="Script Control" service="APPSETUP" classname="psdi.app.designer.virtual.ControlSet" mainobject="false" internal="true">
+      <attrdef attribute="ID" maxtype="ALN" length="128" persistent="false" haslongdesc="false" required="true" userdefined="false" title="Control ID" remarks="Control ID" sameasobject="MAXLABELS" sameasattribute="ID" mustbe="false" ispositive="false" scale="0" canautonum="false" searchtype="NONE" localizable="false" restricted="false" />
+      <attrdef attribute="SCRIPTNUM" maxtype="UPPER" length="128" persistent="false" haslongdesc="false" required="false" userdefined="false" title="Script" remarks="Script number" sameasobject="SWG_UISCRIPTS" sameasattribute="SCRIPTNUM" mustbe="true" ispositive="false" scale="0" canautonum="false" searchtype="NONE" localizable="false" restricted="false" />
+      <attrdef attribute="DATASRC" maxtype="ALN" length="128" persistent="false" haslongdesc="false" required="false" userdefined="false" title="Data source" remarks="Related datasource" sameasobject="MAXLABELS" sameasattribute="ID" mustbe="true" ispositive="false" scale="0" canautonum="false" searchtype="NONE" localizable="false" restricted="false" />
+    </define_table>
+
+    <insert table="PALETTEITEM" ignore_duplicates="true">
+      <insertrow>
+        <columnvalue column="CONTROL" string="SCRIPT" />
+        <columnvalue column="OBJECTNAME" string="CTRL_SCRIPTCONTROL" />
+        <columnvalue column="DESCRIPTION" string="Script Js/CSS" />
+        <columnvalue column="LANGCODE" string="EN" />
+      </insertrow>
+    </insert>
+
+    
+  </statements>
+</script>

@@ -10,7 +10,7 @@
 	</version>
 	<dbmaxvarname>SWGSCRIPTCTRL</dbmaxvarname>
 	<dbscripts>scriptcontrol</dbscripts>
-	<dbversion>V9100-04</dbversion>
+	<dbversion>V9100-06</dbversion>
 	<checklicense>0</checklicense>
-	<lastdbversion>V9100-04</lastdbversion>
+	<lastdbversion>V9100-06</lastdbversion>
 </product>

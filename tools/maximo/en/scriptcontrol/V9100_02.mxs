@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<updatescript version="">
+<updatescript version="7.1.0.0">
 	<app apptype="webclient" id="swg_scripts">
+		<modify control="ctrl_powerapp">
+			<set property="id" value="swg_scripts"/>
+			<set property="mboname" value="SWG_UISCRIPTS"/>
+		</modify>
 		<add container="swg_scripts" control="configurationblock">
 			<set property="id" value="datastore_configurationblock"/>
 		</add>
 		<add before="datastore_configurationblock" container="swg_scripts" control="dialog">
 			<set property="beanclass" value="psdi.webclient.system.beans.ViewBookmarksBean"/>
 			<set property="id" value="searchbook"/>
-			<set property="label" value="Mes signets"/>
+			<set property="label" value="My bookmarks"/>
 			<set property="mboname" value="SWG_UISCRIPTS"/>
 		</add>
 		<add container="searchbook" control="table">
@@ -106,12 +110,12 @@
 		</add>
 		<add container="searchmore_buttongroup" control="pushbutton">
 			<set property="id" value="qbe_restoreappdefault_button"/>
-			<set property="label" value="Restaurer les valeurs par défaut de l'application"/>
+			<set property="label" value="Restore Application Defaults"/>
 			<set property="mxevent" value="qbeclear"/>
 		</add>
 		<add container="searchmore_buttongroup" control="pushbutton">
 			<set property="id" value="qbe_revisebutton"/>
-			<set property="label" value="Réviser"/>
+			<set property="label" value="Revise"/>
 			<set property="menutype" value="SEARCHMOREREVISE"/>
 			<set property="targetid" value="searchmore"/>
 		</add>
@@ -152,7 +156,6 @@
 			<set property="inputmode" value="readonly"/>
 			<set property="label" value="Scripts"/>
 			<set property="mboname" value="SWG_UISCRIPTS"/>
-			<set property="selectmode" value="multiple"/>
 		</add>
 		<add container="results_showlist" control="tablebody">
 			<set property="displayrowsperpage" value="20"/>
@@ -204,7 +207,7 @@
 		</add>
 		<add container="maintabs" control="tab">
 			<set property="id" value="main"/>
-			<set property="label" value="Main"/>
+			<set property="label" value="Script"/>
 			<set property="tabbodycss" value="tabBodyTableStretch"/>
 			<set property="type" value="insert"/>
 		</add>

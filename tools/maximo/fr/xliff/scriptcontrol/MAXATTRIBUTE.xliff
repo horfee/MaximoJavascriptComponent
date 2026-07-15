@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<xliff version='1.1' xmlns='urn:oasis:names:tc:xliff:document:1.1' xmlns:sup='maximo'>
+ <file original='MAXATTRIBUTE.xliff' source-language='en' target-language='fr' datatype='plaintext'>
+  <group>
+   <sup:SourceInfo>
+    <sup:Table>MAXATTRIBUTE</sup:Table>
+    <sup:ID-col>OBJECTNAME:ATTRIBUTENAME</sup:ID-col>
+   </sup:SourceInfo>
+   <trans-unit id='100000' size-unit='char' maxwidth='4000'>
+    <source>Unique Identifier</source>
+    <target>ID unique</target>
+    <sup:Reference Type='Column'>REMARKS</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_UISCRIPTS:SWG_UISCRIPTSID</sup:Reference>
+    <sup:Reference Type='Comment'>Record added: Mon Apr 06 11:42:25 CEST 2009</sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+   <trans-unit id='100001' size-unit='char' maxwidth='160'>
+    <source>Unique Identifier</source>
+    <target>ID unique</target>
+    <sup:Reference Type='Column'>TITLE</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_UISCRIPTS:SWG_UISCRIPTSID</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+
+   <trans-unit id='100002' size-unit='char' maxwidth='4000'>
+    <source>Flag to indicate if the script must be considered or not</source>
+    <target>Flag pour indiquer si le script doit être appliqué ou non</target>
+    <sup:Reference Type='Column'>REMARKS</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_UISCRIPTS:ACTIVE</sup:Reference>
+    <sup:Reference Type='Comment'>Record added: Mon Apr 06 11:42:25 CEST 2009</sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+   <trans-unit id='100003' size-unit='char' maxwidth='160'>
+    <source>Active</source>
+    <target>Actif</target>
+    <sup:Reference Type='Column'>TITLE</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_UISCRIPTS:ACTIVE</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+
+   <trans-unit id='100004' size-unit='char' maxwidth='4000'>
+    <source>Small description</source>
+    <target>Description courte</target>
+    <sup:Reference Type='Column'>REMARKS</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_UISCRIPTS:DESCRIPTION</sup:Reference>
+    <sup:Reference Type='Comment'>Record added: Mon Apr 06 11:42:25 CEST 2009</sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+   <trans-unit id='100005' size-unit='char' maxwidth='160'>
+    <source>Description</source>
+    <target>Description</target>
+    <sup:Reference Type='Column'>TITLE</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_UISCRIPTS:DESCRIPTION</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+
+   <trans-unit id='100006' size-unit='char' maxwidth='4000'>
+    <source>Long Description for Description</source>
+    <target>Description longue</target>
+    <sup:Reference Type='Column'>REMARKS</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_UISCRIPTS:DESCRIPTION_LONGDESCRIPTION</sup:Reference>
+    <sup:Reference Type='Comment'>Record added: Mon Apr 06 11:42:25 CEST 2009</sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+   <trans-unit id='100007' size-unit='char' maxwidth='160'>
+    <source>Description Long description</source>
+    <target>Description longue</target>
+    <sup:Reference Type='Column'>TITLE</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_UISCRIPTS:DESCRIPTION_LONGDESCRIPTION</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+
+   <trans-unit id='100008' size-unit='char' maxwidth='4000'>
+    <source>Boolean flag to indicate if there is any long description for this record</source>
+    <target>Flag booléen pour indiquer si une description longue existe pour cet enregistrement</target>
+    <sup:Reference Type='Column'>REMARKS</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_UISCRIPTS:HASLD</sup:Reference>
+    <sup:Reference Type='Comment'>Record added: Mon Apr 06 11:42:25 CEST 2009</sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+   <trans-unit id='100009' size-unit='char' maxwidth='160'>
+    <source>Has Long Description</source>
+    <target>Possède une description longue</target>
+    <sup:Reference Type='Column'>TITLE</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_UISCRIPTS:HASLD</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+
+   <trans-unit id='100010' size-unit='char' maxwidth='4000'>
+    <source>Language Code</source>
+    <target>Code langue</target>
+    <sup:Reference Type='Column'>REMARKS</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_UISCRIPTS:LANGCODE</sup:Reference>
+    <sup:Reference Type='Comment'>Record added: Mon Apr 06 11:42:25 CEST 2009</sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+   <trans-unit id='100011' size-unit='char' maxwidth='160'>
+    <source>Language Code</source>
+    <target>Langue</target>
+    <sup:Reference Type='Column'>TITLE</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_UISCRIPTS:LANGCODE</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+
+   <trans-unit id='100012' size-unit='char' maxwidth='4000'>
+    <source>CSS or javascript payload</source>
+    <target>contenu CSS ou javascript</target>
+    <sup:Reference Type='Column'>REMARKS</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_UISCRIPTS:SCRIPTCONTENT</sup:Reference>
+    <sup:Reference Type='Comment'>Record added: Mon Apr 06 11:42:25 CEST 2009</sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+   <trans-unit id='100013' size-unit='char' maxwidth='160'>
+    <source>Script content</source>
+    <target>Script</target>
+    <sup:Reference Type='Column'>TITLE</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_UISCRIPTS:SCRIPTCONTENT</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+
+   <trans-unit id='100014' size-unit='char' maxwidth='4000'>
+    <source>Script language ; used to enable color syntax feature</source>
+    <target>Language du script ; utilisé pour activer la coloration syntaxique</target>
+    <sup:Reference Type='Column'>REMARKS</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_UISCRIPTS:SCRIPTLANGUAGE</sup:Reference>
+    <sup:Reference Type='Comment'>Record added: Mon Apr 06 11:42:25 CEST 2009</sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+   <trans-unit id='100015' size-unit='char' maxwidth='160'>
+    <source>Language</source>
+    <target>Langage</target>
+    <sup:Reference Type='Column'>TITLE</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_UISCRIPTS:SCRIPTLANGUAGE</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+
+   <trans-unit id='100016' size-unit='char' maxwidth='4000'>
+    <source>Script number</source>
+    <target>Numéro du script</target>
+    <sup:Reference Type='Column'>REMARKS</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_UISCRIPTS:SCRIPTNUM</sup:Reference>
+    <sup:Reference Type='Comment'>Record added: Mon Apr 06 11:42:25 CEST 2009</sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+   <trans-unit id='100017' size-unit='char' maxwidth='160'>
+    <source>Script</source>
+    <target>Script</target>
+    <sup:Reference Type='Column'>TITLE</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_UISCRIPTS:SCRIPTNUM</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+
+   <trans-unit id='100018' size-unit='char' maxwidth='4000'>
+    <source>Type of script. one of CSS|JAVASCRIPT</source>
+    <target>Type du script. CSS ou JAVASCRIPT</target>
+    <sup:Reference Type='Column'>REMARKS</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_UISCRIPTS:TYPE</sup:Reference>
+    <sup:Reference Type='Comment'>Record added: Mon Apr 06 11:42:25 CEST 2009</sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+   <trans-unit id='100019' size-unit='char' maxwidth='160'>
+    <source>Type</source>
+    <target>Type</target>
+    <sup:Reference Type='Column'>TITLE</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_UISCRIPTS:TYPE</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+
+
+   <trans-unit id='100020' size-unit='char' maxwidth='4000'>
+    <source>Control ID</source>
+    <target>ID du contrôle</target>
+    <sup:Reference Type='Column'>REMARKS</sup:Reference>
+    <sup:Reference Type='DatabaseID'>CTRL_SCRIPTCONTROL:ID</sup:Reference>
+    <sup:Reference Type='Comment'>Record added: Mon Apr 06 11:42:25 CEST 2009</sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-03</sup:Reference>
+   </trans-unit>
+   <trans-unit id='100021' size-unit='char' maxwidth='160'>
+    <source>Control ID</source>
+    <target>ID Contrôle</target>
+    <sup:Reference Type='Column'>TITLE</sup:Reference>
+    <sup:Reference Type='DatabaseID'>CTRL_SCRIPTCONTROL:ID</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+
+
+   <trans-unit id='100022' size-unit='char' maxwidth='4000'>
+    <source>Script number</source>
+    <target>Numéro du script</target>
+    <sup:Reference Type='Column'>REMARKS</sup:Reference>
+    <sup:Reference Type='DatabaseID'>CTRL_SCRIPTCONTROL:SCRIPTNUM</sup:Reference>
+    <sup:Reference Type='Comment'>Record added: Mon Apr 06 11:42:25 CEST 2009</sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-03</sup:Reference>
+   </trans-unit>
+   <trans-unit id='100023' size-unit='char' maxwidth='160'>
+    <source>Script</source>
+    <target>Script</target>
+    <sup:Reference Type='Column'>TITLE</sup:Reference>
+    <sup:Reference Type='DatabaseID'>CTRL_SCRIPTCONTROL:SNUM</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+
+   <trans-unit id='100024' size-unit='char' maxwidth='4000'>
+    <source>Related datasource</source>
+    <target>Source de données</target>
+    <sup:Reference Type='Column'>REMARKS</sup:Reference>
+    <sup:Reference Type='DatabaseID'>CTRL_SCRIPTCONTROL:DATASRC</sup:Reference>
+    <sup:Reference Type='Comment'>Record added: Mon Apr 06 11:42:25 CEST 2009</sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-03</sup:Reference>
+   </trans-unit>
+   <trans-unit id='100025' size-unit='char' maxwidth='160'>
+    <source>Data source</source>
+    <target>Source de données</target>
+    <sup:Reference Type='Column'>TITLE</sup:Reference>
+    <sup:Reference Type='DatabaseID'>CTRL_SCRIPTCONTROL:DATASRC</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+   
+  </group>
+  </file>
+</xliff>

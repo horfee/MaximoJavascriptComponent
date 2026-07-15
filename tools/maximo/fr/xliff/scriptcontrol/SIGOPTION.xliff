@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<xliff version='1.1' xmlns='urn:oasis:names:tc:xliff:document:1.1' xmlns:sup='maximo'>
+ <file original='SIGOPTION.xliff' source-language='en' target-language='fr' datatype='plaintext'>
+  <group>
+   <sup:SourceInfo>
+    <sup:Table>SIGOPTION</sup:Table>
+    <sup:ID-col>APP:OPTIONNAME</sup:ID-col>
+   </sup:SourceInfo>
+   <trans-unit id='100000' size-unit='char' maxwidth='100'>
+    <source>Add to Bookmarks</source>
+    <target>Ajouter aux signets</target>
+    <sup:Reference Type='Column'>DESCRIPTION</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_SCRIPTS:BOOKMARK</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+
+   <trans-unit id='100001' size-unit='char' maxwidth='100'>
+    <source>Clear Changes</source>
+    <target>Annuler les changements</target>
+    <sup:Reference Type='Column'>DESCRIPTION</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_SCRIPTS:CLEAR</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+
+   <trans-unit id='100002' size-unit='char' maxwidth='100'>
+    <source>Delete script</source>
+    <target>Supprimer le script</target>
+    <sup:Reference Type='Column'>DESCRIPTION</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_SCRIPTS:DELETE</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+
+   
+   <trans-unit id='100003' size-unit='char' maxwidth='100'>
+    <source>Duplicate script</source>
+    <target>Dupliquer le script</target>
+    <sup:Reference Type='Column'>DESCRIPTION</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_SCRIPTS:DUPLICATE</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+
+   <trans-unit id='100004' size-unit='char' maxwidth='100'>
+    <source>New script</source>
+    <target>Nouveau script</target>
+    <sup:Reference Type='Column'>DESCRIPTION</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_SCRIPTS:INSERT</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+
+   <trans-unit id='100005' size-unit='char' maxwidth='100'>
+    <source>Next script</source>
+    <target>Script suivant</target>
+    <sup:Reference Type='Column'>DESCRIPTION</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_SCRIPTS:NEXT</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+
+   <trans-unit id='100006' size-unit='char' maxwidth='100'>
+    <source>Previous script</source>
+    <target>Script précédent</target>
+    <sup:Reference Type='Column'>DESCRIPTION</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_SCRIPTS:PREVIOUS</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+
+   <trans-unit id='100007' size-unit='char' maxwidth='100'>
+    <source>Read access to scripts</source>
+    <target>Accès en lecture aux scripts</target>
+    <sup:Reference Type='Column'>DESCRIPTION</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_SCRIPTS:READ</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+
+   <trans-unit id='100008' size-unit='char' maxwidth='100'>
+    <source>Save script</source>
+    <target>Sauvegarder le script</target>
+    <sup:Reference Type='Column'>DESCRIPTION</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_SCRIPTS:SAVE</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+
+   
+   <trans-unit id='100009' size-unit='char' maxwidth='100'>
+    <source>Bookmarks</source>
+    <target>Signets</target>
+    <sup:Reference Type='Column'>DESCRIPTION</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_SCRIPTS:SEARCHBOOK</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+
+    
+   <trans-unit id='100010' size-unit='char' maxwidth='100'>
+    <source>More Search Fields</source>
+    <target>Plus de zones de recherche</target>
+    <sup:Reference Type='Column'>DESCRIPTION</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_SCRIPTS:SEARCHMORE</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+
+
+
+   <trans-unit id='100011' size-unit='char' maxwidth='100'>
+    <source>Save Current Query</source>
+    <target>Sauvegarder la requête en cours</target>
+    <sup:Reference Type='Column'>DESCRIPTION</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_SCRIPTS:SEARCHSQRY</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+   <trans-unit id='100012' size-unit='char' maxwidth='100'>
+    <source>View Search Tips</source>
+    <target>Afficher les conseils pour la recherche</target>
+    <sup:Reference Type='Column'>DESCRIPTION</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_SCRIPTS:SEARCHTIPS</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+   <trans-unit id='100013' size-unit='char' maxwidth='100'>
+    <source>View/Manage Queries</source>
+    <target>Afficher/Gérer les requêtes</target>
+    <sup:Reference Type='Column'>DESCRIPTION</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_SCRIPTS:SEARCHVMQR</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+   <trans-unit id='100014' size-unit='char' maxwidth='100'>
+    <source>Where Clause</source>
+    <target>Clause Where</target>
+    <sup:Reference Type='Column'>DESCRIPTION</sup:Reference>
+    <sup:Reference Type='DatabaseID'>SWG_SCRIPTS:SEARCHWHER</sup:Reference>
+    <sup:Reference Type='Comment'></sup:Reference>
+    <sup:Reference Type='NotEscape'>0</sup:Reference>
+    <sup:Reference Type='MLSupported'>1</sup:Reference>
+    <sup:Reference Type='MLInUse'>1</sup:Reference>
+    <sup:Reference Type='Version'>V9100-01</sup:Reference>
+   </trans-unit>
+   
+   
+  </group>
+ </file>
+</xliff>
