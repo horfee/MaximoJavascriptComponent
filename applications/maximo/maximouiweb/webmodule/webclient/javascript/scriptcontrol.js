@@ -1,17 +1,17 @@
 
 
-if ( window.scripts === undefined ) {
-    window.scripts = {};
+if ( window.scriptcontrols === undefined ) {
+    window.scriptcontrols = {};
 }
 
 function ScriptControl(cmpId) {
     this.id = cmpId;
     
-    if ( window.scripts[this.id] != undefined ) {
+    if ( window.scriptcontrols[this.id] != undefined ) {
         console.warn(`A script with id ${this.id} already exists. weird...`);
     }
 
-    window.scripts[this.id] = this;
+    window.scriptcontrols[this.id] = this;
 }
 
 /* 
@@ -62,13 +62,6 @@ ScriptControl.prototype.getControlStructure = async function(controls) {
         eventType: "getControlStructure",
         eventValue: controls
     });
-    // return new Promise((resolve, reject) => {
-    //     sendXHREvent("getControlStructure",  this.id, controls, REQUESTTYPE_HIGHASYNC, "json", "text/json", (resp) => {
-    //         resolve(resp);
-    //     }, (error) => {
-    //         reject(error);
-    //     });
-    // });
 }
 
 ScriptControl.prototype.getPropertiesFromControl = async function(controls, properties) {
@@ -76,31 +69,16 @@ ScriptControl.prototype.getPropertiesFromControl = async function(controls, prop
         eventType: "getPropertiesFromControlsOrComponents",
         eventValue: {controls, properties}
     });
-
-    // return new Promise((resolve, reject) => {
-    //     sendXHREvent("getPropertiesFromControlsOrComponents",  this.id, {controls, properties}, REQUESTTYPE_HIGHASYNC, "json", "text/json", (resp) => {
-    //         resolve(resp);
-    //     }, (error) => {
-    //         reject(error);
-    //     });
-    // });
 }
 
 ScriptControl.prototype.getComponentsMapping = async function() {
     return this.sendAsyncEvent({
         eventType: "getComponentsMapping",
     });
-    // return new Promise((resolve, reject) => {
-    //     sendXHREvent("getComponentsMapping",  this.id, undefined, REQUESTTYPE_HIGHASYNC, "json", "text/json", (resp) => {
-    //         resolve(resp);
-    //     }, (error) => {
-    //         reject(error);
-    //     });
-    // });
 }
 
 
-ScriptControl.prototype.getData = async function(dataSourceId, attributes, filters, sort, count) {
+ScriptControl.prototype.getData = async function(dataSourceId, attributes, filters, sort, start, count) {
     return this.sendAsyncEvent({
         eventType: "getData",
         eventValue: {
@@ -108,46 +86,21 @@ ScriptControl.prototype.getData = async function(dataSourceId, attributes, filte
             fields: attributes,
             filters: filters,
             sort: sort,
+            start: start,
             count: count
         }
     });
-    // const requestPayload = {
-    //     "datasource": dataSourceId || "mainrecord",
-    //     fields: attributes
-    // };
-    // if ( filters ) {
-    //     requestPayload.filters = filters;
-    // }
-    // if ( sort ) {
-    //     requestPayload.sort = sort;
-    // }
-
-    
-    // return new Promise((resolve, reject) => {
-    //     sendXHREvent("getData",  this.id, requestPayload, REQUESTTYPE_HIGHASYNC,"json", "text/json", (resp) => {
-    //         resolve(resp);
-    //     }, (error) => {
-    //         reject(error);
-    //     });
-    // });
 }
 
 ScriptControl.prototype.setData = async function(dataSource, data) {
     return this.sendEvent({
         eventType: "setData",
-        //targetId: dataSource,
         eventValue: JSON.stringify({datasource: dataSource, data: data})
     });
 }
 
 ScriptControl.prototype.addRecord = async function(dataSource, data) {
-    // const result = await this.sendAsyncEvent({
-    //     eventType: "addrow",
-    //     requestType: REQUESTTYPE_SYNC,
-    //     handleAs: "xml",
-    //     responseType: "text/xml",
-    //     targetId: dataSource
-    // });
+
     const self = this;
     return new Promise( (resolve, reject) => {
         const _handler = function(resp, ioArgs) {   
@@ -205,7 +158,7 @@ ScriptControl.prototype.apply = function(script) {
 
 
 function notifyScriptControl(compId, event, script) {
-    const _s = window.scripts[compId];
+    const _s = window.scriptcontrols[compId];
     if ( _s ) {
         _s.onScriptUpdate(event);
     } else if ( script ) {
