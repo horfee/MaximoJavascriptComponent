@@ -462,4 +462,26 @@ public class ScriptControl extends ControlInstance {
         return WebClientBean.EVENT_HANDLED;
 
     }
+
+    public int selectRow() {
+        try {
+            WebClientEvent event = getWebClientSession().getCurrentEvent();
+            JSONObject eventData = JSONObject.parse(HTML.decode((String)event.getValue()));
+        
+            String dataSourceId = (String)eventData.get("datasource");
+            Integer rowNum = (Integer)eventData.get("rownum");
+            DataBean ds = getPage().getAppInstance().getDataBean(dataSourceId);
+        
+            if ( dataSourceId == null || rowNum == null || ds == null ) return WebClientBean.EVENT_STOP_ALL;
+
+            DataBean dataBean = getWebClientSession().getDataBean(dataSourceId);
+            if ( dataBean != null ) {
+                dataBean.highlightrow(rowNum);
+            }
+        } catch(IOException | MXException e) {
+            e.printStackTrace();
+            return WebClientBean.EVENT_STOP_ALL;    
+        }
+        return WebClientBean.EVENT_HANDLED;
+    }
 }

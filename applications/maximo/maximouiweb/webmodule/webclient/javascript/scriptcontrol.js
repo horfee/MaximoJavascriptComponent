@@ -92,6 +92,13 @@ ScriptControl.prototype.getData = async function(dataSourceId, attributes, filte
     });
 }
 
+ScriptControl.prototype.selectRow = function(dataSourceId, rowNum) {
+    return this.sendEvent({
+        eventType: "selectrow",
+        eventValue: JSON.stringify({datasource: dataSourceId, rownum: rowNum})
+    })
+}
+
 ScriptControl.prototype.setData = async function(dataSource, data) {
     return this.sendEvent({
         eventType: "setData",
