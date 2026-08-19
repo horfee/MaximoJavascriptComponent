@@ -339,9 +339,11 @@ public class ScriptControl extends ControlInstance {
                         sb.append( ((boolean)sort.get(field))? "desc": "asc");
                         sb.append(",");
                     }
-                    sb.deleteCharAt(sb.length() - 1);
-                    dataSource.setOrderBy(sb.toString());
-                    dataSource.reset();
+                    if ( sb.length() > 0 ) {
+                        sb.deleteCharAt(sb.length() - 1);
+                        dataSource.setOrderBy(sb.toString());
+                        dataSource.reset();
+                    }
                 }
 
                 if ( filters != null ) {
