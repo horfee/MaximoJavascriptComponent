@@ -148,7 +148,6 @@ public class ScriptControl extends ControlInstance {
                     ((JSONArray)properties).add(eventData.get("properties").toString());
                 }
             }
-            getPage().getComponentInstance("");
 
             for(Object id : ((JSONArray)requestedControls)) {
                 BaseInstance inst = getPage().getComponentInstance((String)id);
@@ -327,41 +326,66 @@ public class ScriptControl extends ControlInstance {
 
             } else if ( dataSourceID != null && !dataSourceID.isBlank() && dataSource != null) {
                 if ( count == -1 ) count = dataSource.getMboSet().count();
-                System.out.println("Getting data from data source: " + dataSourceID + " with filters: " + filters + " and fields: " + fields + " and sort: " + sort + " and count: " + count + " and start: " + start);
                 String[] attributes = (String[])fields.stream()
                                         .map(Object::toString)
                                         .toArray(String[]::new);
 
-                MboSetData mboSetData = dataSource.getMboSetData(start, count, attributes);
-                JSONArray finalData = new JSONArray();
-                for(MboData data : mboSetData.getMboData()) {
-                    System.out.println(data.toString());
-                    JSONObject row = new JSONObject();
-                    JSONObject flags = new JSONObject();
-                    row.put("_flags", flags);
-                    flags.put("_toBeAdded", data.toBeAdded());
-                    flags.put("_toBeUpdated", data.toBeUpdated());
-                    flags.put("_toBeDeleted", data.toBeDeleted());
-                    flags.put("_modified", data.isModified());
-                    for(String attribute : attributes) {
-                        MboValueData mvd = data.getMboValueData(attribute);
-                        if ( mvd == null ) {
-                            row.put(attribute, null);
-                            flags.put(attribute, 0b1); // readonly as null value
-                        } else {
-                            if ( mvd.getDataAsObject() instanceof java.sql.Timestamp ) {
-                                java.sql.Timestamp ts = (java.sql.Timestamp) mvd.getDataAsObject();
-                                row.put(attribute, ts.toInstant().toString());
-                            } else {
-                                row.put(attribute, mvd.getDataAsObject());
-                            }
-                            flags.put(attribute, (mvd.isReadOnly() ? 0b1 : 0) | (mvd.isRequired() ? 0b10 : 0) );
-                        }
+                
+                if ( sort != null ) {
+                    StringBuilder sb = new StringBuilder();
+                    for(Object field: sort.keySet()) {
+                        sb.append(field);
+                        sb.append(" ");
+                        sb.append( ((boolean)sort.get(field))? "desc": "asc");
+                        sb.append(",");
                     }
-
-                    finalData.add(row);
+                    sb.deleteCharAt(sb.length() - 1);
+                    dataSource.setOrderBy(sb.toString());
+                    dataSource.reset();
                 }
-                result.put("data", finalData);
+
+                if ( filters != null ) {
+                    for(Object key: filters.keySet()) {
+                        dataSource.setQbe(key.toString(), filters.get(key).toString());
+                    }
+                    dataSource.reset();
+                }
+                MboSetData mboSetData = dataSource.getMboSetData(start, count, attributes);
+                if ( mboSetData != null ) {
+
+                    JSONArray finalData = new JSONArray();
+                    for(MboData data : mboSetData.getMboData()) {
+                        JSONObject row = new JSONObject();
+                        JSONObject flags = new JSONObject();
+                        row.put("_flags", flags);
+                        flags.put("_toBeAdded", data.toBeAdded());
+                        flags.put("_toBeUpdated", data.toBeUpdated());
+                        flags.put("_toBeDeleted", data.toBeDeleted());
+                        flags.put("_modified", data.isModified());
+                        for(String attribute : attributes) {
+                            MboValueData mvd = data.getMboValueData(attribute);
+                            if ( mvd == null ) {
+                                row.put(attribute, null);
+                                flags.put(attribute, 0b1); // readonly as null value
+                            } else {
+                                if ( mvd.getDataAsObject() instanceof java.sql.Timestamp ) {
+                                    java.sql.Timestamp ts = (java.sql.Timestamp) mvd.getDataAsObject();
+                                    row.put(attribute, ts.toInstant().toString());
+                                } else {
+                                    row.put(attribute, mvd.getDataAsObject());
+                                }
+                                flags.put(attribute, (mvd.isReadOnly() ? 0b1 : 0) | (mvd.isRequired() ? 0b10 : 0) );
+                            }
+                        }
+    
+                        finalData.add(row);
+                    }
+                    result.put("data", finalData);
+                }
+                JSONObject f = new JSONObject();
+                f.putAll(dataSource.getQbeAttributes());
+                result.put("currentFilter", f);
+                result.put("currentRow", dataSource.getCurrentRow());
                 result.put("status", "ok");
 
             }
