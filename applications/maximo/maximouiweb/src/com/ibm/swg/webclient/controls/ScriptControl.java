@@ -383,7 +383,9 @@ public class ScriptControl extends ControlInstance {
                     result.put("data", finalData);
                 }
                 JSONObject f = new JSONObject();
-                f.putAll(dataSource.getQbeAttributes());
+                if ( dataSource != null && dataSource.getQbeAttributes() != null ) { 
+                    f.putAll(dataSource.getQbeAttributes());
+                }
                 result.put("currentFilter", f);
                 result.put("currentRow", dataSource.getCurrentRow());
                 result.put("status", "ok");
