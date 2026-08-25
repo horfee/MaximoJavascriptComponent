@@ -34,7 +34,7 @@ public class ScriptControl extends ControlInstance {
     public void initialize() {
         super.initialize();
         DataBean db = getDataBean();
-        if ( db != null ) {
+        if ( db != null && this.getDescriptor().getProperty("datasrc") != null ) {
             db.addListener(new DataBeanListener() {
 
                 @Override
@@ -347,10 +347,14 @@ public class ScriptControl extends ControlInstance {
                 }
 
                 if ( filters != null ) {
-                    for(Object key: filters.keySet()) {
-                        dataSource.setQbe(key.toString(), filters.get(key).toString());
+                    filters = uppercaseKeys(filters);
+                    if ( !filtersAreIdenticals(filters, dataSource.getQbeAttributes())) {
+                        dataSource.resetQbe();
+                        for(Object key: filters.keySet()) {
+                            dataSource.setQbe(key.toString(), filters.get(key).toString());
+                        }
+                        dataSource.reset();
                     }
-                    dataSource.reset();
                 }
                 MboSetData mboSetData = dataSource.getMboSetData(start, count, attributes);
                 if ( mboSetData != null ) {
@@ -388,7 +392,11 @@ public class ScriptControl extends ControlInstance {
                 if ( dataSource != null && dataSource.getQbeAttributes() != null ) { 
                     f.putAll(dataSource.getQbeAttributes());
                 }
+                if ( dataSource.getCurrentRow() == -1 ) 
+                    dataSource.getMbo(0);
+
                 result.put("currentFilter", f);
+                result.put("count", dataSource.count());
                 result.put("currentRow", dataSource.getCurrentRow());
                 result.put("status", "ok");
 
@@ -421,6 +429,46 @@ public class ScriptControl extends ControlInstance {
 
         return WebClientBean.EVENT_HANDLED;
 
+    }
+
+    protected JSONObject uppercaseKeys(JSONObject filters) {
+        if (filters == null) {
+            return null;
+        }
+
+        JSONObject result = new JSONObject();
+        for (Object key : filters.keySet()) {
+            result.put(((String)key).toUpperCase(), filters.get(key));
+        }
+
+        return result;
+    }
+
+    protected boolean filtersAreIdenticals(JSONObject filters, Map<String, String> qbeAttributes) {
+        if (filters == null || qbeAttributes == null || filters.isEmpty() ) {
+            return true;
+        }
+
+        if (filters.size() != qbeAttributes.size()) {
+            return false;
+        }
+
+        for (Map.Entry<String, String> entry : qbeAttributes.entrySet()) {
+            String key = entry.getKey();
+            String qbeValue = entry.getValue();
+            if (!filters.containsKey(key)) {
+                return false;
+            }
+
+            String filterValue = (String)filters.get(key);
+            // Dans filters, les valeurs sont uniquement des String
+            if (filterValue == null && qbeValue != null || filterValue != null && qbeValue == null || !filterValue.equals(qbeValue)) {
+                return false;
+            }
+
+        }
+
+        return true;
     }
 
     public int setData() {

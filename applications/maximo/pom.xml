@@ -66,21 +66,21 @@
             <artifactId>businessobjects</artifactId>
             <version>1.0.0</version>
             <scope>system</scope>
-            <systemPath>/Users/horfee/Developpement/MaximoJavascriptComponent/maximo_libs/businessobjects.jar</systemPath>
+            <systemPath>/Users/horfee/Developpement/maximo/wlp/usr/servers/MXServer/apps/maximouiweb.war/WEB-INF/lib/businessobjects1.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.maximo.external</groupId>
             <artifactId>maximouiweb</artifactId>
             <version>1.0.0</version>
             <scope>system</scope>
-            <systemPath>/Users/horfee/Developpement/MaximoJavascriptComponent/maximo_libs/maximouiweb.jar</systemPath>
+            <systemPath>/Users/horfee/Developpement/maximo/wlp/usr/servers/MXServer/apps/maximouiweb.war/WEB-INF/classes.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.maximo.external</groupId>
             <artifactId>json</artifactId>
             <version>1.0.0</version>
             <scope>system</scope>
-            <systemPath>/Users/horfee/Developpement/MaximoJavascriptComponent/maximo_libs/json4j.jar</systemPath>
+            <systemPath>/Users/horfee/Developpement/maximo/wlp/usr/servers/MXServer/apps/maximouiweb.war/WEB-INF/lib/json4j.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
