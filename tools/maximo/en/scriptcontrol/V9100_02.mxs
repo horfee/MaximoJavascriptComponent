@@ -84,12 +84,12 @@
 		<add container="1783370272414" control="radiobutton">
 			<set property="id" value="1783370277279"/>
 			<set property="label" value="Javascript"/>
-			<set property="value" value="javascript"/>
+			<set property="value" value="JAVASCRIPT"/>
 		</add>
 		<add container="1783370272414" control="radiobutton">
 			<set property="id" value="1783370272422"/>
 			<set property="label" value="CSS"/>
-			<set property="value" value="css"/>
+			<set property="value" value="CSS"/>
 		</add>
 		<add container="searchmore_1" control="checkbox">
 			<set property="dataattribute" value="HASLD"/>

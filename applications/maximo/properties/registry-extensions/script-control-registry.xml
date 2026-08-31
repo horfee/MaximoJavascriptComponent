@@ -20,6 +20,10 @@
 				<flag name="nonconditional"/>
 				<flag name="global"/>
 			</property>
+			<property name="jstype">
+				<flag name="nonconditional"/>
+				<flag name="global"/>
+			</property>
 		</property-list>
 		<component-list>
 			<components id="${name}_components_h" layout="horizontal">

@@ -2,6 +2,7 @@
 <%@page import="psdi.server.MXServer"%>
 <%@page import="psdi.webclient.system.dojo.Dojo"%>
 <%@page import="com.ibm.swg.webclient.controls.ScriptControl"%>
+<%@page import="psdi.webclient.system.runtime.WebClientRuntime"%>
 <%@include file="../common/componentheader.jsp" %>
 
 <%
@@ -52,8 +53,13 @@ if ( designmode ) {
         if ( scriptControl.hasChanged() ) {
             eventType = "refresh";   
         }
+
+        String jstype = "text/javascript";
+        if ( !WebClientRuntime.isNull(control.getProperty("jstype"))) {
+            jstype = control.getProperty("jstype");
+        }
         %>
-            <script type="text/javascript" id="<%=component.getId()%>" data-id="<%=component.getId()%>">
+            <script type="<%=jstype%>" id="<%=component.getId()%>" data-id="<%=component.getId()%>">
                 _<%=scriptFID%> = async function() {
                     <%
                     if ( debugEnabled ) %>debugger;

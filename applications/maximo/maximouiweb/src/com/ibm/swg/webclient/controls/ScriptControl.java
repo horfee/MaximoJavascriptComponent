@@ -34,7 +34,11 @@ public class ScriptControl extends ControlInstance {
     public void initialize() {
         super.initialize();
         DataBean db = getDataBean();
-        if ( db != null && this.getDescriptor().getProperty("datasrc") != null ) {
+        String origDataSrc = this.getElement().getAttribute("datasrc");
+        if ( "".equals(origDataSrc) ) {
+            origDataSrc = null;
+        }
+        if ( db != null && origDataSrc != null ) {
             db.addListener(new DataBeanListener() {
 
                 @Override
@@ -52,11 +56,6 @@ public class ScriptControl extends ControlInstance {
             });
         }
     }
-
-    // @Override
-    // public boolean hasChanged() {
-    //     return needsToUpdate || super.hasChanged();
-    // }
 
     protected MboRemote getScript() {
         if (script == null || getWebClientSession().getDebug() ) {

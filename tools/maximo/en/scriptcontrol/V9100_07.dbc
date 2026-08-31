@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script SYSTEM "script.dtd">
+<script author="ALEXANDRE" scriptname="SCRIPTCONTROL">
+  <description></description>
+  <statements>
+
+    <add_attributes object="CTRL_SCRIPTCONTROL">
+      <attrdef attribute="JSTYPE" title="Javascript Type" remarks="Type of the javascript. can be text/javascript or module" maxtype="ALN" length="20" persistent="false"/>
+    </add_attributes>
+    
+  </statements>
+</script>

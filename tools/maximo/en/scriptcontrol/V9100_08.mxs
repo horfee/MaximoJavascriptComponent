@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<updatescript version="7.1.0.0">
+	<app apptype="webclient" id="designer">
+		<add container="prop_script_1" control="textbox">
+			<set property="dataattribute" value="jstype"/>
+			<set property="id" value="prop_script_jstype"/>
+		</add>
+	</app>
+</updatescript>
