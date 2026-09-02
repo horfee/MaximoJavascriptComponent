@@ -373,9 +373,9 @@ public class ScriptControl extends ControlInstance {
                                 row.put(attribute, null);
                                 flags.put(attribute, 0b1); // readonly as null value
                             } else {
-                                if ( mvd.getDataAsObject() instanceof java.sql.Timestamp ) {
-                                    java.sql.Timestamp ts = (java.sql.Timestamp) mvd.getDataAsObject();
-                                    row.put(attribute, ts.toInstant().toString());
+                                if ( mvd.getDataAsObject() instanceof Date ) {
+                                    Date d = mvd.getDataAsDate();
+                                    row.put(attribute, d.toInstant().toString());
                                 } else {
                                     row.put(attribute, mvd.getDataAsObject());
                                 }
