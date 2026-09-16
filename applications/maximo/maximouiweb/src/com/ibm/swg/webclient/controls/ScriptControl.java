@@ -356,10 +356,13 @@ public class ScriptControl extends ControlInstance {
                     }
                 }
                 MboSetData mboSetData = dataSource.getMboSetData(start, count, attributes);
+                List<Integer> selection = new ArrayList<>();
+
                 if ( mboSetData != null ) {
 
                     JSONArray finalData = new JSONArray();
-                    for(MboData data : mboSetData.getMboData()) {
+                    for(int i = 0; i < mboSetData.getMboDataCount(); i++) {
+                        MboData data = mboSetData.getMboData(i);
                         JSONObject row = new JSONObject();
                         JSONObject flags = new JSONObject();
                         row.put("_flags", flags);
@@ -367,6 +370,10 @@ public class ScriptControl extends ControlInstance {
                         flags.put("_toBeUpdated", data.toBeUpdated());
                         flags.put("_toBeDeleted", data.toBeDeleted());
                         flags.put("_modified", data.isModified());
+                        if ( data.isSelected()) {
+                            selection.add(i);
+                        }
+
                         for(String attribute : attributes) {
                             MboValueData mvd = data.getMboValueData(attribute);
                             if ( mvd == null ) {
@@ -397,6 +404,7 @@ public class ScriptControl extends ControlInstance {
                 result.put("currentFilter", f);
                 result.put("count", dataSource.count());
                 result.put("currentRow", dataSource.getCurrentRow());
+                result.put("selection", selection);
                 result.put("status", "ok");
 
             }
