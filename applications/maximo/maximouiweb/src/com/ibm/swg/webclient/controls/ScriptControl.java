@@ -356,7 +356,7 @@ public class ScriptControl extends ControlInstance {
                     }
                 }
                 MboSetData mboSetData = dataSource.getMboSetData(start, count, attributes);
-                List<Integer> selection = new ArrayList<>();
+                JSONArray selection = new JSONArray();
 
                 if ( mboSetData != null ) {
 
