@@ -66,7 +66,7 @@
             <artifactId>businessobjects</artifactId>
             <version>1.0.0</version>
             <scope>system</scope>
-            <systemPath>/Users/horfee/Developpement/maximo/wlp/usr/servers/MXServer/apps/maximouiweb.war/WEB-INF/lib/businessobjects1.jar</systemPath>
+            <systemPath>/Users/horfee/Downloads/businessobjects.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.maximo.external</groupId>
