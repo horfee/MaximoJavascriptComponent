@@ -56,6 +56,7 @@
 /* ── SVG icon library ──────────────────────────────────────── */
 const ICONS = {
   filter:   `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M18 28L14 24.6V18L4 6.2V4H28v2.2L18 18zM6.6 6L16 17.4V23.4L18 25V17.4L27.4 6z"/></svg>`,
+  refresh:  `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M27 16a11 11 0 01-18.7 7.8L5 20.5V27h6.5"/><path d="M5 16a11 11 0 0118.7-7.8L27 11.5V5h-6.5"/></svg>`,
   collapse: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M24 12L16 20 8 12 9.4 10.6 16 17.2 22.6 10.6z"/></svg>`,
   expand:   `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M8 20L16 12 24 20 22.6 21.4 16 14.8 9.4 21.4z"/></svg>`,
   download: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M26 24v4H6v-4H4v4a2 2 0 002 2h20a2 2 0 002-2v-4zM26 14l-1.4-1.4L17 20.2V4h-2v16.2L7.4 12.6 6 14l10 10z"/></svg>`,
@@ -74,6 +75,21 @@ const ICONS = {
   trash:    `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M12 12h2v12h-2zm6 0h2v12h-2zM4 6v2h2l2 20h16l2-20h2V6zm5.8 20L10 8h12l.2 18zM12 2h8v2h-8z"/></svg>`,
   close:    `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4l6.6 6.6L8 22.6 9.4 24l6.6-6.6 6.6 6.6 1.4-1.4-6.6-6.6z"/></svg>`,
 };
+
+const labels = {
+    editColumnLayout: 'Modifier la mise en forme',
+    closeButton: 'Fermer',
+    resetToDefaults: 'Rétablir les colonnes par défaut',
+    editLayout: 'Modifier la mise en forme',
+    cancel: 'Annuler',
+    apply: 'Valider',
+    description: 'Faites glisser/déposer les colonnes pour les réorganiser, ou sur le bouton \'oeil\' pour afficher/masquer la colonne.',
+    rowsPerPage: 'Lignes par page : ',
+    noRecordFound: 'Aucun résultat',
+    selectAllRecords: '☐ Sélectionner des enregistrements',
+    unselectAllRecords: '☐ Sélectionner des enregistrements'
+    
+}
 
 /* ── Utility helpers ───────────────────────────────────────── 
 Create an element "tag", set the attributes
@@ -187,9 +203,11 @@ class MaximoTable {
     this._filterOpen  = true;
     this._collapsed   = false;
     this._filterValues= {};       // { colKey: value }
-    this._selected    = new Set();// selected row indices in _allData
+    this._checked     = new Set();// selected row indices in _allData
+    this._selected    = undefined;// current highlighted row
     this._columns     = [];       // active column layout
-
+    this._selectionMode = false;  // CL show the row selection column
+    
     /* Column resize state */
     this._resizing    = null;
 
@@ -298,11 +316,13 @@ class MaximoTable {
     const actions = el('div', { class: 'mx-toolbar-actions' });
 
     this._btnFilter = iconBtn('filter', 'Toggle filters', () => this._toggleFilter());
+    this._btnRefresh = iconBtn('refresh', 'Rafraîchir', () => this.refresh());
     this._btnCollapse = iconBtn('collapse', 'Collapse', () => this._toggleCollapse());
     const btnDownload = iconBtn('download', 'Download CSV', () => this._downloadCSV());
     this._btnLayout = iconBtn('settings', 'Edit layout', () => this._openColumnManager());
 
     actions.appendChild(this._btnFilter);
+    actions.appendChild(this._btnRefresh);
     actions.appendChild(el('div', { class: 'mx-toolbar-divider' }));
     actions.appendChild(this._btnCollapse);
     actions.appendChild(el('div', { class: 'mx-toolbar-divider' }));
@@ -325,8 +345,9 @@ class MaximoTable {
         html: (action.icon ? ICONS[action.icon] || '' : '') +
               `<span>${action.label}</span>`,
         onclick: () => {
-          const selected = [...this._selected].map(i => this._allData[i]);
-          if (action.onClick) action.onClick(selected, this);
+          const checked = [...this._checked].map(i => this._allData[i]);
+          const selected = this._allData[this._selected];
+          if (action.onClick) action.onClick(checked, selected, this);
         },
       });
       bar.appendChild(btn);
@@ -347,7 +368,7 @@ class MaximoTable {
       this._renderHead();
   }
 
-  async retrieveData() {
+  async retrieveData(includeFilter=true) {
     const count = this.getPageSize();
     let filter = this._filterValues;
     let sort = undefined;
@@ -355,15 +376,21 @@ class MaximoTable {
         sort = {};
         sort[this._sortKey] = (this._sortDir === "desc");
     }
-    if ( Object.keys(filter).length == 0 ) {
+    if ( !includeFilter || Object.keys(filter).length == 0 ) {
         filter = undefined;
     }
     const data = await scriptContext.getData(this._opts.dataSourceId, this.getDataKeys(), filter, sort, (this._page - 1) * count, count);
     if ( data && data.status === "ok" ) {
-        debugger;
         this.setFilters(data.currentFilter);
         this._totalCount = data.count;
-        this.setSelected(data.currentRow);
+        this._checked = new Set(data.selection);
+        const _sel = this._selectionMode;
+        this._selectionMode = this._checked.size > 0;
+        if ( _sel != this._selectionMode ) {
+            this._rebuildTable();
+        }
+        //this._selected = data.currentRow;
+        //this.setSelected(data.currentRow);
         this.setData(data.data, data.currentRow);   
     } else {
         this.setData([]);
@@ -371,10 +398,16 @@ class MaximoTable {
     }
   }
   
-  setSelected(rownums) {
-      if ( typeof(rownums) != Array) rownums = [rownums];
-      this._selected = new Set(rownums);
-      this._renderBody();
+  setSelected(rownum) {
+      //CL
+      /*if ( typeof(rownums) != Array) rownums = [rownums];
+      this._selected = new Set(rownums);*/
+      /*if (!Array.isArray(rownums)) rownums = [rownums];
+      this._selected = new Set(rownums.filter(i => Number.isInteger(i)));*/
+      if ( Number.isInteger(rownum) ) {
+        this._selected = rownum;
+        this._renderBody();
+      }
   }
   
   /* ── Column header + filter row ───────────────────────────── */
@@ -395,11 +428,30 @@ class MaximoTable {
     });
     thCheck.appendChild(this._selectAllChk);
     hRow.appendChild(thCheck);*/
+    
+    
+    // CL Selection column, shown only when selection mode is enabled
+    this._selectAllChk = null;
+    if (this._selectionMode) {
+        const thCheck = el('th', {
+          class: 'mx-selection-cell',
+          role: 'columnheader'
+        });
+      this._selectAllChk = el('input', {
+        type: 'checkbox',
+        class: 'mx-row-checkbox',
+        'aria-label': 'Tout sélectionner',
+        onchange: e => this._checkAll(e.target.checked),
+      });
+      thCheck.appendChild(this._selectAllChk);
+      hRow.appendChild(thCheck);
+    }
 
     visibleCols.forEach((col, i) => {
       const th = el('th', {
         role: 'columnheader',
         'data-key': col.key,
+        title: col.label,
         style: { width: col.width + 'px', minWidth: '60px' },
       });
       this._attachColumnDrag(th, i);
@@ -441,14 +493,24 @@ class MaximoTable {
 
     // Empty cell for checkbox column
     //fRow.appendChild(el('th'));
+    
+    // CL Empty cell for selection column
+    if (this._selectionMode) fRow.appendChild(
+      el('th', { class: 'mx-selection-cell' })
+    );
 
     visibleCols.forEach(col => {
       const fTh = el('th');
       const type = col.type || 'text';
-
-      if (type === 'boolean') {
+      const filtrable = col.filtrable ?? true;
+      if ( filtrable == false ) {
+          fRow.appendChild(fTh);
+          return;
+      }
+      
+      if (type === 'boolean' ) {
         // Three-state checkbox: indeterminate=no filter, checked=true, unchecked=false
-        const wrap = el('div', { class: 'mx-filter-check-wrap' });
+        /*const wrap = el('div', { class: 'mx-filter-check-wrap' });
         const chk = el('input', {
           type: 'checkbox',
           class: 'mx-filter-checkbox',
@@ -458,16 +520,49 @@ class MaximoTable {
         chk.indeterminate = true;
         chk._state = 0; // 0=none, 1=true, 2=false
         chk.addEventListener('click', e => {
+            debugger;
           e.preventDefault();
           chk._state = (chk._state + 1) % 3;
           if (chk._state === 0) { chk.indeterminate = true; chk.checked = false; }
           else if (chk._state === 1) { chk.indeterminate = false; chk.checked = true; }
           else { chk.indeterminate = false; chk.checked = false; }
-          this._filterValues[col.key] = chk._state;
+          this._filterValues[col.key] = chk._state == 0 ? "N" : chk._state == 1 ? "O" : "";
           this._applyFiltersDebounced();
         });
         wrap.appendChild(chk);
-        fTh.appendChild(wrap);
+        fTh.appendChild(wrap);*/
+        const select = el('select', {
+            class: 'mx-filter-input',
+            'aria-label': 'Filtrer ' + col.label,
+            'data-key': col.key,
+          });
+        
+            //debugger;
+            console.log(col.key + "] " + this._filterValues[col.key?.toLowerCase()]);
+          [
+            { value: '', label: 'Tous' },
+            { value: 'O', label: 'Oui' },
+            { value: 'N', label: 'Non' },
+          ].forEach(option => {
+            const opt = el(
+              'option',
+              {
+                value: option.value,
+              },
+              option.label
+            );
+        
+            opt.selected = String(this._filterValues[col.key.toLowerCase()] ?? '') === option.value;
+            select.appendChild(opt);
+          });
+        
+          select.addEventListener('change', e => {
+            const value = e.target.value;
+            this._filterValues[col.key?.toLowerCase()] = value;
+            this._applyFilters();
+          });
+        
+          fTh.appendChild(select);
       } else if (type === 'image' || type === 'button' || type === 'actions') {
         // No filter for purely visual / interactive columns
       } else {
@@ -536,6 +631,10 @@ class MaximoTable {
       // Wait briefly before treating the click as a single click.
       tr._clickTimer = setTimeout(() => {
         tr._clickTimer = null;
+        this._emit("row-selected", {
+            row: row,
+            rowIndex: (this._page - 1) * this._pageSize + globalIdx
+        });
         this._toggleSelect(globalIdx, tr);
       }, 250);
     }
@@ -574,9 +673,11 @@ class MaximoTable {
 
       /* ── boolean ── */
       case 'boolean': {
-        if (val == null || val === '') return fmt.blankLabel != null ? fmt.blankLabel : '';
-        return val ? (fmt.trueLabel  != null ? fmt.trueLabel  : '✓')
-                   : (fmt.falseLabel != null ? fmt.falseLabel : '✗');
+        if (val == null || val === '') return 
+            fmt.blankLabel != null ? fmt.blankLabel : '';
+        
+        return val ? (fmt.trueLabel  != null ? fmt.trueLabel  : el("img", {src:"cb_checked.gif", style:{"display": "block", "margin": "0 auto"}}))
+                   : (fmt.falseLabel != null ? fmt.falseLabel : el("img", {src:"cb_unchecked.gif", style:{"display": "block", "margin": "0 auto"}}));
       }
 
       /* ── date ── */
@@ -679,10 +780,11 @@ class MaximoTable {
     const pageData = this._getPageData();
 
     if (pageData.length === 0) {
-      const colspan = visibleCols.length + 1;
+      //const colspan = visibleCols.length;
+      const colspan = visibleCols.length + (this._selectionMode ? 1 : 0); //CL
       this._tbodyEl.appendChild(
         el('tr', { class: 'mx-empty-row' },
-          el('td', { colspan: String(colspan) }, 'No records found.')
+          el('td', { colspan: String(colspan) }, labels.noRecordFound)
         )
       );
       return;
@@ -690,24 +792,67 @@ class MaximoTable {
 
     pageData.forEach(({ row, globalIdx }) => {
       const tr = el('tr', {
-        class: this._selected.has(globalIdx + (this._pageSize*(this._page-1))) ? 'mx-row--selected' : '',
+        class: this._selected == (globalIdx + (this._pageSize*(this._page-1))) ? 'mx-row--selected' : '',
         'data-idx': String(globalIdx),
         role: 'row',
         onclick: e => {
             this._handleRowClick(e, row, globalIdx, tr);
         },
       });
+    
+    //CL
+    if (this._selectionMode) {
+        const selectTd = el('td', { class: 'mx-selection-cell' });
+        const rowChk = el('input', {
+          type: 'checkbox',
+          class: 'mx-row-checkbox',
+          'aria-label': 'Sélectionner la ligne',
+          onchange: e => {
+            e.stopPropagation();
+            this._toggleCheck(globalIdx, tr, e.target.checked);
+          },
+        });
 
+        rowChk.checked = this._checked.has(globalIdx);
+        selectTd.appendChild(rowChk);
+        tr.appendChild(selectTd);
+      }
+      
       visibleCols.forEach(col => {
         const val = row[col.key];
         const result = this._formatCell(col, val, row, globalIdx);
-        if (result instanceof HTMLElement) {
-          const td = el('td', { class: 'mx-td-widget' });
-          td.appendChild(result);
-          tr.appendChild(td);
+        
+        if ( col.displaytype === "link" ) {
+            const link = document.createElement("a");
+            const td = el('td', { class: 'mx-td-widget'});
+            
+            td.appendChild(link);
+            tr.appendChild(td);
+            link.addEventListener("click", (ev) => {
+                this._emit("link-click", {
+                    table: this,
+                    row: row,
+                    selectedIndex: (this._page - 1) * this._pageSize + globalIdx,
+                    event: ev
+                });
+            });
+            
+            if ( result instanceof HTMLElement ) {
+                link.appendChild(result);
+            } else {
+                link.innerHTML = result;
+            }
         } else {
-          tr.appendChild(el('td', { title: result }, result));
+            if (result instanceof HTMLElement) {
+              const td = el('td', { class: 'mx-td-widget' });
+              td.appendChild(result);
+              tr.appendChild(td);
+            } else {
+              tr.appendChild(el('td', { title: result }, result));
+            }    
         }
+        
+        
       });
 
       this._tbodyEl.appendChild(tr);
@@ -719,13 +864,39 @@ class MaximoTable {
     const footer = el('div', { class: 'mx-footer', role: 'navigation', 'aria-label': 'Pagination' });
 
     this._summaryEl = el('span', { class: 'mx-footer-summary' });
-
+    
+    // Selection mode toggle CL
+    this._selectAllChkInFooter = null;
+    if (this._selectionMode) {
+      this._selectAllChkInFooter = el("div", {
+          class: "mx-table",
+          style: {
+            "width": "unset",
+            "margin-left": "-3px"
+          }
+      });
+      this._selectAllChkInFooter.appendChild(el('input', {
+        type: 'checkbox',
+        class: 'mx-row-checkbox',
+        'aria-label': labels.selectAllRecords,
+        onchange: e => this._checkAll(e.target.checked),
+      }));
+      footer.appendChild(this._selectAllChkInFooter);
+    }
+    this._selectionButton = el('button', {
+      class: 'mx-select-records-btn',
+      type: 'button',
+      'aria-pressed': 'false',
+      onclick: () => this._toggleSelectionMode(),
+    }, labels.selectAllRecords);
+    footer.appendChild(this._selectionButton);
+    
     // Page size selector
     const sizeWrap = el('div', { class: 'mx-page-size-wrap' });
-    sizeWrap.appendChild(document.createTextNode('Rows per page:'));
+    sizeWrap.appendChild(document.createTextNode(labels.rowsPerPage));
     this._pageSizeSelect = el('select', {
       class: 'mx-page-size-select',
-      'aria-label': 'Rows per page',
+      'aria-label': labels.rowsPerPage,
       onchange: e => {
         this._pageSize = parseInt(e.target.value, 10);
         this.retrieveData();
@@ -806,8 +977,8 @@ class MaximoTable {
         this._page = Math.floor(currentRow / this._pageSize) + 1;
     }
     
-    if ( typeof(currentRow) != Array) currentRow = [currentRow];
-     this._selected = new Set(currentRow);
+    //if ( typeof(currentRow) != Array) currentRow = [currentRow];
+     this._selected = currentRow;
      
     this._renderBody();
     this._renderFooter();
@@ -853,43 +1024,142 @@ class MaximoTable {
   }
 
   /* ── Selection ────────────────────────────────────────────── */
-  _toggleSelect(idx, tr, forceValue) {
-    const isSelected = forceValue !== undefined ? forceValue : !this._selected.has(idx);
-
-    if (!this._opts.multiSelect) this._selected.clear();
-
-    if (isSelected) this._selected.add(idx);
-    else this._selected.delete(idx);
+  _toggleCheck(idx, tr, forceValue) {
+    const isSelected = forceValue !== undefined ? forceValue : !this._checked.has(idx);
+    
+    //CL
+    //if (!this._opts.multiSelect) this._selected.clear();
+    if (!this._selectionMode) {
+        this._checked.clear();
+    }
+    
+    if (isSelected) this._checked.add(idx);
+    else this._checked.delete(idx);
 
     // Update row classes and checkboxes
     this._tbodyEl.querySelectorAll('tr[data-idx]').forEach(row => {
       const i = parseInt(row.dataset.idx, 10);
-      const sel = this._selected.has(i);
+      const sel = this._checked.has(i);
       row.classList.toggle('mx-row--selected', sel);
       const chk = row.querySelector('.mx-row-checkbox');
       if (chk) chk.checked = sel;
     });
 
     // Update select-all checkbox
-    const allVisible = this._allData.every(({ globalIdx }) => this._selected.has(globalIdx));
-    if (this._selectAllChk) this._selectAllChk.checked = allVisible && this._allData.length > 0;
-
-    this._emit('row-selected', {
-      row: this._allData[idx],
+    //const allVisible = this._allData.every(({ globalIdx }) => this._selected.has(globalIdx));
+    //if (this._selectAllChk) this._selectAllChk.checked = allVisible && this._allData.length > 0;
+    //CL
+    const allSelected = this._allData.length > 0 && this._allData.every((_, i) => this._checked.has(i));
+    if (this._selectAllChk) this._selectAllChk.checked = allSelected;
+    
+    // send event to maximo
+    /*const eventValue = {
+      datasourceId: this._opts.dataSourceId,
+      rownums: [idx],
       selected: this._selected.has(idx),
-      selectedIndex: (this._page - 1) * this._pageSize + idx,
-      allSelected: [...this._selected].map(i => this._allData[i]),
+    };
+    
+    console.log(
+      'MULTIPLE SELECTION - Événement envoyé à Maximo :',
+      eventValue
+    );
+    */
+    /*scriptContext.sendAsyncEvent({
+      eventType: 'checkRows',
+      targetId: this._opts.dataSourceId,
+      eventValue: {
+        datasourceId: this._opts.dataSourceId,
+        rownums: [idx],
+        selected: this._selected.has(idx),
+      },
+    });*/
+    
+    this._emit('row-checked', {
+      row: this._allData[idx],
+      checked: this._checked.has(idx),
+      rowIndex : (this._page - 1) * this._pageSize + idx
+      //selected: this._selected.has(idx),
+      //selectedIndex: (this._page - 1) * this._pageSize + idx,
+      //allSelected: this._selected// [...this._selected].map((i,indx) => indx),
     });
   }
 
-  _selectAll(checked) {
+  /*_selectAll(checked) {
     this._allData.forEach(({ globalIdx }) => {
       if (checked) this._selected.add(globalIdx);
       else this._selected.delete(globalIdx);
     });
     this._renderBody();
     this._renderFooter();
-  }
+  }*/
+  
+  //CL
+  _checkAll(checked) {
+
+      if ( checked ) this._checked = new Set(Array.from({ length: this._pageSize }, (_, i) => i));
+      else this._checked.clear();
+      /*this._allData.forEach((_, globalIdx) => {
+        if (checked) this._selected.add(globalIdx);
+        else this._selected.delete(globalIdx);
+      });
+    */
+    if (this._selectAllChkInFooter && this._selectAllChkInFooter.querySelector('input[type="checkbox"]') != undefined) {
+        this._selectAllChkInFooter.querySelector('input[type="checkbox"]').checked = checked;
+    }
+    if ( this._selectAllChk ) {
+        this._selectAllChk.checked = checked;
+    }
+      this._renderBody();
+      this._renderFooter();
+      
+      //event added for selectAll
+      
+      /*scriptContext.sendAsyncEvent({
+          eventType: 'checkRows',
+          targetId: this._opts.dataSourceId,
+          eventValue: {
+            datasourceId: this._opts.dataSourceId,
+            rownums: this._allData.map((_, index) => index),
+            selected: checked,
+          },
+        });*/
+
+      this._emit('row-checked', {
+        row: null,
+        selected: checked,
+        rowIndex: null
+      });
+    }
+  
+  //CL
+    _toggleSelectionMode() {
+        this._selectionMode = !this._selectionMode;
+        
+        const triggerEvent = this._checked.size > 0;
+        
+        this._checked.clear();
+        this._selectionButton.setAttribute('aria-pressed', String(this._selectionMode));
+        this._selectionButton.textContent = this._selectionMode
+          ? labels.selectAllRecords
+          : labels.unselectedAllRecords;
+        this._rebuildTable();
+        
+        //toggleselectrecords
+        /*this._emit('toggle-selection-mode', { 
+            state: this._selectionMode
+        });*/
+        //toggleselectrecords
+        debugger;
+        scriptContext.sendEvent({eventType: "toggleselectrecords", eventValue:undefined, targetId: this._opts.dataSourceId});
+        
+        if ( triggerEvent ) {
+            this._emit('row-checked', {
+                row: null,
+                selected: false,
+                rowIndex: null
+              });
+        }
+    }
 
   /* ── Filter toggle ────────────────────────────────────────── */
   _toggleFilter() {
@@ -914,7 +1184,7 @@ class MaximoTable {
     const NO_CSV_TYPES = new Set(['image', 'button', 'actions']);
     const visibleCols = this._columns.filter(c => c.visible && !NO_CSV_TYPES.has(c.type));
     const header = visibleCols.map(c => `"${c.label}"`).join(',');
-    const rows = this._filtered.map(row =>
+    const rows = this._allData.map(row =>
       visibleCols.map(col => {
         const val = row[col.key] ?? '';
         const formatted = this._formatCell(col, val, row, -1);
@@ -1005,15 +1275,15 @@ class MaximoTable {
   /* ── Column Manager modal ─────────────────────────────────── */
   _openColumnManager() {
     const backdrop = el('div', { class: 'mx-modal-backdrop' });
-    const modal    = el('div', { class: 'mx-modal', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'Edit layout' });
+    const modal    = el('div', { class: 'mx-modal', role: 'dialog', 'aria-modal': 'true', 'aria-label': labels.editLayout });
 
     /* Header */
     const mHeader = el('div', { class: 'mx-modal-header' });
-    mHeader.appendChild(document.createTextNode('Edit Column Layout'));
+    mHeader.appendChild(el('div', {class: 'mx-modal-header-title', html:labels.editColumnLayout}));
     const closeBtn = el('button', {
       class: 'mx-modal-header-close',
       type: 'button',
-      'aria-label': 'Close',
+      'aria-label': labels.closeButton,
       html: ICONS.close,
       onclick: () => backdrop.remove(),
     });
@@ -1022,11 +1292,11 @@ class MaximoTable {
 
     /* Body: two-panel — all columns list */
     const body = el('div', { class: 'mx-modal-body' });
-    const panel = el('div', { class: 'mx-col-list-panel' });
+    const panel = el('div', { class: 'mx-column-list-panel' });
 
-    panel.appendChild(el('div', { class: 'mx-col-list-label' }, 'Columns — drag to reorder, click eye to show/hide'));
+    panel.appendChild(el('div', { class: 'mx-column-list-label' }, labels.description));
 
-    const list = el('div', { class: 'mx-col-list' });
+    const list = el('div', { class: 'mx-column-list' });
     panel.appendChild(list);
     body.appendChild(panel);
     modal.appendChild(body);
@@ -1038,16 +1308,16 @@ class MaximoTable {
       list.innerHTML = '';
       tmpCols.forEach((col, idx) => {
         const item = el('div', {
-          class: 'mx-col-item',
+          class: 'mx-column-item',
           draggable: 'true',
           'data-idx': String(idx),
         });
 
-        item.appendChild(el('span', { class: 'mx-col-item-drag', html: ICONS.dragH }));
-        item.appendChild(el('span', { class: 'mx-col-item-name' }, col.label));
+        item.appendChild(el('span', { class: 'mx-column-item-drag', html: ICONS.dragH }));
+        item.appendChild(el('span', { class: 'mx-column-item-name' }, col.label));
 
         const eyeBtn = el('button', {
-          class: 'mx-col-item-vis',
+          class: 'mx-column-item-vis',
           type: 'button',
           'aria-label': col.visible ? 'Hide column' : 'Show column',
           'data-tooltip': col.visible ? 'Hide' : 'Show',
@@ -1098,7 +1368,7 @@ class MaximoTable {
     const resetBtn = el('button', {
       class: 'mx-btn mx-btn--ghost',
       type: 'button',
-      html: '<span>Reset to default</span>',
+      html: `<span>${labels.resetToDefaults}</span>`,
       onclick: () => {
         backdrop.remove();
         this._resetColumns();
@@ -1108,14 +1378,14 @@ class MaximoTable {
     const cancelBtn = el('button', {
       class: 'mx-btn mx-btn--secondary',
       type: 'button',
-      html: '<span>Cancel</span>',
+      html: `<span>${labels.cancel}</span>`,
       onclick: () => backdrop.remove(),
     });
 
     const applyBtn = el('button', {
       class: 'mx-btn mx-btn--primary',
       type: 'button',
-      html: '<span>Apply</span>',
+      html: `<span>${labels.apply}</span>`,
       onclick: () => {
         this._columns = tmpCols;
         this._saveColumns();
@@ -1141,6 +1411,9 @@ class MaximoTable {
 
   /* ── Rebuild (after column changes) ──────────────────────── */
   _rebuildTable() {
+    this._footerEl.remove();
+    this._footerEl = this._buildFooter();
+    this._root.appendChild(this._footerEl);
     this._renderHead();
     this._renderBody();
     this._renderFooter();
@@ -1158,7 +1431,7 @@ class MaximoTable {
    * @returns {Array<object>}
    */
   getSelected() {
-    return [...this._selected].map(i => this._allData[i]);
+    return [...this._checked].map(i => this._allData[i]);
   }
 
   /**
@@ -1189,9 +1462,21 @@ class MaximoTable {
   /**
    * Refresh the display (e.g. after external data mutation).
    */
-  refresh() {
-    this._applyFilters();
-  }
+    async refresh() {
+        /*await scriptContext.sendAsyncEvent({eventType: "refreshData", targetId: APPID, eventValue: {
+            datasourceId: this._opts.dataSourceId
+        }});*/
+        await scriptContext.sendAsyncEvent({eventType: "reset", targetId: this._opts.dataSourceId});
+        await this.retrieveData();
+        /*this._selectionMode = false;
+        this._selected.clear();
+        this._page = 1;
+        this._selectionButton.setAttribute('aria-pressed', 'false');
+        this._selectionButton.textContent = '☐ Sélectionner des enregistrements';
+        this._rebuildTable();
+        await this.retrieveData();
+        if (this._allData.length > 0) this.setSelected(0);*/
+    }
 }
 
 /* ── Export ─────────────────────────────────────────────────── */

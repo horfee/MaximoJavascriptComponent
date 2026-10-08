@@ -1,0 +1,219 @@
+from com.ibm.json.java import JSONArray, JSONObject
+from psdi.webclient.system.controller import WebClientEvent
+from psdi.util import HTML
+
+def actionToJSON(mbo,ctx):
+    result = JSONObject()
+    
+    result.put("ownernodeid", mbo.getString("ownernodeid"))
+    result.put("action", mbo.getString("action"))
+    result.put("actionid", mbo.getInt("actionid"))
+    result.put("instruction", mbo.getString("instruction"))
+    result.put("membernodetitle", mbo.getString("membernodetitle"))
+    result.put("ispositive", mbo.getBoolean("ispositive"))
+    
+    return result
+
+def nodeToJSON(mbo,ctx):
+    result = JSONObject()
+
+    result.put("nodeid", mbo.getInt("nodeid"))
+    result.put("xcoordinate", mbo.getInt("xcoordinate"))
+    result.put("ycoordinate", mbo.getInt("ycoordinate"))
+    result.put("title", mbo.getString("title"))
+    result.put("description", mbo.getString("description"))
+    result.put("nodetype", mbo.getString("nodetype"))
+    result.put("pointedto", mbo.getString("pointedto"))
+
+    return result
+    
+def getAllNodes(ctx):
+    wcs = ctx.webclientsession()
+    
+    response = wcs.getResponse()
+    response.setContentType("application/json")
+    response.setCharacterEncoding("UTF-8")
+    
+    nodes = wcs.getDataBean("nodes_table").getMboSet()
+    result = JSONArray()
+    i = 0
+    while nodes.getMbo(i):
+        result.add(nodeToJSON(nodes.getMbo(i),ctx))
+        i += 1
+    
+    response.getWriter().write(result.toString())
+    ctx.setEventHandled()
+    
+def getAllActions(ctx):
+    wcs = ctx.webclientsession()
+    
+    response = wcs.getResponse()
+    response.setContentType("application/json")
+    response.setCharacterEncoding("UTF-8")
+    
+    currentProcess = wcs.getDataBean("mainrecord").getMbo()
+    
+    nodes = currentProcess.getMboSet("NODES")
+    i = 0
+    
+    result = JSONArray()
+    while nodes.getMbo(i):
+        actions = nodes.getMbo(i).getMboSet("ACTIONS")
+        j = 0
+        while actions.getMbo(j):
+            result.add(actionToJSON(actions.getMbo(j),ctx))
+            j += 1
+            
+        i += 1
+    
+    response.getWriter().write(result.toString())
+    ctx.setEventHandled()
+
+def openPropertiesForNode(ctx):
+    wcs = ctx.webclientsession()
+    ev = wcs.getCurrentEvent()
+    selectedNode = ev.getValue()
+    nodesDataBean = wcs.getDataBean("nodes_table")
+    if selectedNode and nodesDataBean:
+        nodesSet = nodesDataBean.getMboSet()
+        i = 0
+        selected = False
+        while nodesSet.getMbo(i) and not selected:
+            if nodesSet.getMbo(i).getString("nodeid") == selectedNode:
+                nodesDataBean.setCurrentRow(i)
+                type = nodesDataBean.getNodeTypeMaxValue()
+                ctx.log_error("Type is " + type)
+                propEvent = WebClientEvent("wf" + type + "properties", "nodes_table", None, wcs)
+                nodesTableControl = wcs.getControlInstance("nodes_table")
+                propEvent.setSourceControl(nodesTableControl)
+                wcs.queueEvent(propEvent)
+                selected = True
+            i += 1
+    ctx.setEventHandled()
+    
+def selectNode(ctx):
+    wcs = ctx.webclientsession()
+    ev = wcs.getCurrentEvent()
+
+    selectedNode = ev.getValue()
+    nodesDataBean = wcs.getDataBean("nodes_table")
+    if selectedNode and nodesDataBean:
+        nodesSet = nodesDataBean.getMboSet()
+        i = 0
+        selected = False
+        while nodesSet.getMbo(i) and not selected:
+            if nodesSet.getMbo(i).getString("nodeid") == selectedNode:
+                nodesDataBean.highlightrow(i)
+                selected = True
+            i += 1
+    ctx.setEventHandled()
+
+def createNode(ctx):
+    wcs = ctx.webclientsession()
+    ev = wcs.getCurrentEvent()
+
+    nodeType = ev.getValue()
+    nodesDataBean = wcs.getDataBean("nodes_table")
+    if nodeType and nodesDataBean:
+        if nodeType == "task": 
+            nodesDataBean.addTask()
+        if nodeType == "condition": 
+            nodesDataBean.addCondition()
+        if nodeType == "input": 
+            nodesDataBean.addManualInput()
+        if nodeType == "interaction": 
+            nodesDataBean.addInteraction()
+        if nodeType == "subprocess": 
+            nodesDataBean.addSubProcess()
+        if nodeType == "wait": 
+            nodesDataBean.addWait()
+        if nodeType == "stop": 
+            nodesDataBean.addStop()
+    nodesDataBean.fireStructureChangedEvent()
+    nodesDataBean.refreshTable()
+    ctx.setEventHandled()
+    
+def updateNode(ctx):
+    wcs = ctx.webclientsession()
+    ev = wcs.getCurrentEvent()
+
+    nodeInfo = JSONObject.parse(HTML.decode(ev.getValue()))
+
+    newX = nodeInfo.get("xcoordinate")
+    newY = nodeInfo.get("ycoordinate")
+    nodeid = nodeInfo.get("id")
+    
+    ctx.log_error("{id} - ({x},{y})".format(id=nodeid, x=newX, y=newY))
+    nodesDataBean = wcs.getDataBean("nodes_table")
+    if nodesDataBean:
+        ctx.log_error("DataBean found, and current nodeid is {id}".format(id=nodesDataBean.getMbo().getInt("nodeid")))
+        
+    if nodesDataBean and nodesDataBean.getMbo().getInt("nodeid") == int(nodeid):
+        ctx.log_error("{id} - ({x},{y}) Altering...".format(id=nodeid, x=newX, y=newY))
+        nodesDataBean.getMbo().setValue("xcoordinate", newX)
+        nodesDataBean.getMbo().setValue("ycoordinate", newY)
+        ctx.log_error("{id} - ({x},{y}) Done".format(id=nodeid, x=newX, y=newY))
+    nodesDataBean.fireStructureChangedEvent()
+    nodesDataBean.refreshTable()
+    ctx.setEventHandled()
+    
+def createRelationship(ctx):
+    ctx.log_error("Debug 0")
+    wcs = ctx.webclientsession()
+    ev = wcs.getCurrentEvent()
+
+    relationInfo = JSONObject.parse(HTML.decode(ev.getValue()))
+    isPositive = "positive" == relationInfo.get("kind")
+    source = int(relationInfo.get("source"))
+    target = int(relationInfo.get("target"))
+
+    actionsDataBean = wcs.getDataBean("actions_table")
+    
+    if actionsDataBean:
+        actionsDataBean.addrow()
+        newAction = actionsDataBean.getMbo()
+        newAction.setValue("OWNERNODEID", source)
+        newAction.setValue("MEMBERNODEID", target)
+        newAction.setValue("ISPOSITIVE", isPositive)
+        
+    ctx.setEventHandled()
+    
+def openPropertiesForAction(ctx):
+    wcs = ctx.webclientsession()
+    ev = wcs.getCurrentEvent()
+    relationInfo = JSONObject.parse(HTML.decode(ev.getValue()))
+    selectedNode = int(relationInfo.get("source"))
+    
+    ctx.log_error("Looking for node " + str(selectedNode))
+    nodesDataBean = wcs.getDataBean("nodes_table")
+    if selectedNode and nodesDataBean:
+        nodesSet = nodesDataBean.getMboSet()
+        i = 0
+        selected = False
+        while nodesSet.getMbo(i) and not selected:
+            if nodesSet.getMbo(i).getInt("nodeid") == selectedNode:
+                nodesDataBean.highlightrow(i)
+                selected = True
+            i += 1
+            
+    selectedRelationship = int(relationInfo.get("id"))
+    actionsDataBean = wcs.getDataBean("actions_table")
+    if selectedRelationship is not None and actionsDataBean:
+        actionsSet = actionsDataBean.getMboSet()
+        i = 0
+        selected = False
+        while actionsSet.getMbo(i) and not selected:
+            if actionsSet.getMbo(i).getInt("actionid") == selectedRelationship:
+                actionsDataBean.setCurrentRow(i)
+                nodesDataBean = wcs.getDataBean("nodes_table")
+                type = nodesDataBean.getString("nodetype").lower()
+                if type != "input":
+                    type = ""
+                propEvent = WebClientEvent("wf" + type + "actionproperties", "actions_table", "", wcs)
+                actionsTableControl = wcs.getControlInstance("actions_table")
+                propEvent.setSourceControl(actionsTableControl)
+                ctx.log_error(str(propEvent))
+                wcs.queueEvent(propEvent)
+                selected = True
+            i += 1
+    ctx.setEventHandled()

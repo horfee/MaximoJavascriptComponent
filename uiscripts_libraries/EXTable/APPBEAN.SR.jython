@@ -1,0 +1,33 @@
+from com.ibm.json.java import JSONObject
+from psdi.util import HTML
+#from psdi.webclient.system.controller import WebClientEvent
+
+    
+def selectRow(ctx):
+    wcs = ctx.getAppInstance().getWebClientSession()
+    ev = wcs.getCurrentEvent()
+    params = JSONObject.parse(HTML.decode(ev.getValue()))
+    
+    dataSourceId = params.get("datasourceId")
+    rownum = params.get("rownum")
+    
+    dataBean = wcs.getDataBean(dataSourceId)
+    dataBean.highlightrow(rownum)
+    
+
+def gotoRecord(ctx):
+    app = ctx.getAppInstance()
+    appBean = app.getAppBean()
+    wcs = app.getWebClientSession()
+    ev = wcs.getCurrentEvent()
+    params = ev.getValue()
+
+    appBean.getResultsBean().highlightrow(int(params))
+    wcs.getCurrentApp().getPageStack().get(0).gotoTab("insert")
+    #wcs.queueEvent(WebClientEvent("gototab", wcs.getCurrentAppId(), "insert", wcs));
+    
+def gotoTab(ctx):
+    app = ctx.getAppInstance()
+    wcs = app.getWebClientSession()
+    ev = wcs.getCurrentEvent()
+    app.getAppBean().gotoTab(wcs, ev.getValue())

@@ -1,0 +1,127 @@
+from com.ibm.json.java import JSONObject, JSONArray
+from psdi.util import HTML
+from java.util import Date
+
+def hasLinearData(ctx):
+    wcs = ctx.webclientsession()
+    response = wcs.getResponse()
+    response.setContentType("application/json")
+    response.setCharacterEncoding("UTF-8")
+    
+    featuresBean = wcs.getDataBean("features_datasrc")
+    specificationsBean = wcs.getDataBean("specifications_datasrc")
+    workordersBean = wcs.getDataBean("workorders_datasrc")
+    ticketsBean = wcs.getDataBean("tickets_datasrc")
+    
+    result = JSONObject()
+    
+    result.put("hasFeatures", featuresBean.count())
+    result.put("hasSpecifications", specificationsBean.count())
+    result.put("hasWorks", workordersBean.count())
+    result.put("hasTickets", ticketsBean.count())
+    
+    response.getWriter().write(result.toString())
+    ctx.setEventHandled()
+
+def selectRow(ctx):
+    wcs = ctx.webclientsession()
+    ev = wcs.getCurrentEvent()
+    params = JSONObject.parse(HTML.decode(ev.getValue()))
+    
+    ctx.log_error("JP SelectRow Debug 1 " + params.get("datasourceId"))
+    ctx.log_error("JP SelectRow Debug 2 " + str(params.get("row")))
+    dataBean = wcs.getataBean(params.get("datasourceId"))
+    if dataBean:
+        dataBean.highlightrow(params.get("row"))
+    ctx.setEventHandled()
+
+def fetchSpecsForFeature(ctx):
+    wcs = ctx.webclientsession()
+    response = wcs.getResponse()
+    ev = wcs.getCurrentEvent()
+    params = JSONObject.parse(HTML.decode(ev.getValue()))
+    attributes = params.get("fields")
+    response.setContentType("application/json")
+    response.setCharacterEncoding("UTF-8")
+    
+    ctx.log_error("JP Debug 1")
+    featuresBean = wcs.getDataBean(params.get("featuresDataSourceId"))
+    ctx.log_error("JP Debug 2")
+    featureSpecRelationship = wcs.getDataBean(params.get("featureSpecsDataSourceId")).getParentRelationship()
+    i = 0
+    result = JSONArray()
+    ctx.log_error("JP Debug 3")
+    while featuresBean.getMboSet().getMbo(i):
+        ctx.log_error("JP Debug 4")
+        feature = featuresBean.getMboSet().getMbo(i)
+        featureSpecSet = feature.getMboSet(featureSpecRelationship)
+        j = 0
+        ctx.log_error("JP Debug 5")
+        while featureSpecSet.getMbo(j):
+            ctx.log_error("JP Debug 6")
+            rec = JSONObject()
+            for attribute in attributes:
+                ctx.log_error("JP Debug 7")
+                if featureSpecSet.getMbo(j).isNull(attribute):
+                    ctx.log_error("JP Debug 8")
+                    value = None
+                else:
+                    ctx.log_error("JP Debug 9")
+                    value = featureSpecSet.getMbo(j).getMboValueData(attribute).getDataAsObject()
+                    if isinstance(value, Date):
+                        value = value.toInstant().toString()
+                    ctx.log_error("JP Debug 10")
+                rec.put(attribute, value)
+                
+            result.add(rec)
+            j += 1
+        i += 1
+    ctx.log_error("JP Debug 11")
+    response.getWriter().write(result.toString())
+    ctx.setEventHandled()
+    
+def fetchLinearData(ctx):
+    wcs = ctx.webclientsession()
+    response = wcs.getResponse()
+    ev = wcs.getCurrentEvent()
+    params = JSONObject.parse(HTML.decode(ev.getValue()))
+    attributes = params.get("fields")
+    response.setContentType("application/json")
+    response.setCharacterEncoding("UTF-8")
+    
+    result = JSONArray()
+    bean = wcs.getDataBean(params.get("dataSourceId"))
+    
+    relationship = None
+    ctx.log_error("JP Debug 1")
+    if params.get("includeCountFor"):
+        subBean = wcs.getDataBean(params.get("includeCountFor"))
+        relationship = subBean.getParentRelationship()
+    #ctx.log_error("Relationship is " + relationship)
+    ctx.log_error("JP Debug 2")
+    if bean:
+        i = 0
+        mboset = bean.getMboSet()
+        ctx.log_error("JP Debug 3")
+        while mboset.getMbo(i):
+            rec = JSONObject()
+            ctx.log_error("JP Debug 4")
+            for attribute in attributes:
+                ctx.log_error("JP Debug 4.1 -> " + attribute)
+                if mboset.getMbo(i).isNull(attribute):
+                    value = None
+                else:
+                    value = mboset.getMbo(i).getMboValueData(attribute).getDataAsObject()
+                    if isinstance(value, Date):
+                        value = value.toInstant().toString()
+                rec.put(attribute, value)
+
+            if relationship:
+                count = mboset.getMbo(i).getMboSet(relationship).count()
+                rec.put(params.get("includeCountFor"), count)
+            result.add(rec)
+            i += 1
+    
+        
+    response.getWriter().write(result.toString())
+    ctx.setEventHandled()

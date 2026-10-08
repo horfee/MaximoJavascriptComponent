@@ -1,12 +1,12 @@
 /* ---------- Header et navigation bar -------- */
 
 .cds--header {
-    background-color: var(--edf-blue); //Background header
+    background-color: var(--edf-blue); 
     border-block-end: 1px solid (--edf-blue);
 }
 
 .mas-common-side-nav .cds--search .cds--search-input {
-  background-color: var(--edf-blue-600); // Barre de recherche navigation
+  background-color: var(--edf-blue-600); 
 }
 
 .iot--suite-header-profile{
@@ -26,15 +26,15 @@
 }
 
 .cds--side-nav__icon>svg, .cds--search--expandable.cds--search--expanded .cds--search-magnifier-icon{
-  fill: var(--edf-white);//Icones navigateur
+  fill: var(--edf-white);
 }
 
 .cds--side-nav__items img {
-  filter: brightness(0) invert(1); //Icones applications navigateur
+  filter: brightness(0) invert(1);
 }
 
 .cds--header .cds--header__action:focus, .cds--header .cds--header__menu-title.iot--btn.cds--btn--primary:focus, .cds--header__action--active, .cds--header__action:hover {
-  background-color: var(--edf-blue-600); //Bouton fermer navigateur
+  background-color: var(--edf-blue-600); 
 }
 
 .mas-common-side-nav:not(.cds--side-nav--expanded) .mas-common-side-nav--menu-level--0>button[aria-expanded=true]~ul.cds--side-nav__menu {
@@ -42,11 +42,11 @@
 }
 
 .iot--header__subtitle, .cds--header a.cds--header__menu-item {
-  color: var(--edf-white); // Nom de l'appli (Manage)
+  color: var(--edf-white); 
 }
 
 .mas-common-side-nav .cds--side-nav__divider, .cds--header .cds--header__submenu.cds--header-action-btn[aria-expanded=true]>ul.cds--header__menu, .cds--header a.cds--header__menu-item {
-  background-color: var(--edf-blue); // Diviseurs du menu en bleu plus clair
+  background-color: var(--edf-blue);
 }
 
 .iot--suite-header .cds--header__submenu.cds--header-action-btn[aria-expanded=true]>ul.cds--header__menu a.cds--header__menu-item:hover {

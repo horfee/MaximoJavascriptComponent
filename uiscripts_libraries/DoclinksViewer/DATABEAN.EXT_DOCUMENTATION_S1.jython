@@ -1,0 +1,62 @@
+#
+# It is necessary to create a script with flag AUTOSCRIPT.INTERFACE = :YES
+# It is necessary to add two variable binding
+#   - beanapp (LITTERAL) = ACTIVITY
+#   - beanid (LITTERAL) = ext_documentation_s1
+
+from java.lang import String
+from java.util import Base64
+from java.nio.charset import StandardCharsets
+from java.util import Random 
+from psdi.webclient.system.controller import JCEncryptUtil
+from jarray import zeros
+
+
+def initialize(ctx):
+    ctx.log_debug("Initializing databean")
+    
+    
+    try:
+        wcs = ctx.webclientsession()
+        dataBean = wcs.getDataBean("ext_documentation_s1")
+        ctx.log_debug(dataBean.getMboSet().getMboSetInfo().getObjectName())
+        drilldownMbo = dataBean.getMboSet().getMbo(0)
+        if drilldownMbo is None:
+            dataBean.getMboSet().setup()
+            drilldownMbo = dataBean.getMboSet().getMbo(0)
+        currentRecord = dataBean.getMboSet().getOwner()
+        drilldownMbo.setPointedMbo(currentRecord)
+    except (Exception, ValueError, TypeError), e:
+        ctx.log_debug(str(e))
+
+def encodeFile(ctx):
+    wcs = ctx.webclientsession()
+    ev = wcs.getCurrentEvent()
+    
+    salt = wcs.getRequest().getSession().getAttribute("randomSalt")
+    if salt is None:
+        ctx.log_debug("Salt is none")
+    else:
+        ctx.log_debug("Salt has been found !")
+        
+    if salt is None:
+        random = Random()
+        salt = zeros(24, 'b')
+        random.nextBytes(salt)
+        wcs.request.getSession().setAttribute("randomSalt", salt)
+		
+    ec = JCEncryptUtil(salt, "UTF-8")
+    url = ev.getValue()
+    userID = ctx.getUserInfo().getLoginID()
+    fulllink = "user=" + userID + "\nurl=" + url
+    
+    ctx.log_debug(fulllink)
+    url = ec.URLSafeEncrypt(fulllink)
+    
+    ctx.log_debug("Result is : ")
+    ctx.log_debug(url)
+    response = wcs.getResponse()
+    response.setContentType("application/json")
+    response.setCharacterEncoding("UTF-8")
+    response.getWriter().write("{ \"url\":\"" + url + "\"}")
+    ctx.setEventHandled()

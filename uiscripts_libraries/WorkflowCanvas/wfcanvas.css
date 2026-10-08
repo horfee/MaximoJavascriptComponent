@@ -1,0 +1,23 @@
+/** Maximo Workflow Editor - modern theme */
+:root{--mwe-bg:#f4f7fb;--mwe-surface:#fff;--mwe-border:#d8e0e8;--mwe-text:#172536;--mwe-muted:#607286;--mwe-blue:#0f62fe;--mwe-shadow:0 10px 30px rgba(26,54,93,.12)}
+.mwe{position:relative;display:flex;flex-direction:column;width:100%;height:100%;min-height:560px;background:var(--mwe-bg);color:var(--mwe-text);font:14px/1.4 "IBM Plex Sans",Arial,sans-serif;border:1px solid var(--mwe-border);border-radius:12px;overflow:hidden;box-shadow:var(--mwe-shadow)}
+.mwe-toolbar{display:flex;align-items:center;gap:7px;min-height:84px;padding:10px 14px;background:rgba(255,255,255,.96);border-bottom:1px solid var(--mwe-border);overflow-x:auto;backdrop-filter:blur(8px)}
+.mwe-tool,.mwe-action{border:1px solid transparent;background:transparent;color:var(--mwe-text);min-width:66px;padding:7px 9px;cursor:pointer;border-radius:8px;transition:background .16s,border-color .16s,box-shadow .16s,transform .16s}
+.mwe-tool:hover,.mwe-action:hover{background:#edf5ff;border-color:#a6c8ff;box-shadow:0 4px 12px rgba(15,98,254,.12);transform:translateY(-1px)}
+.mwe-tool:focus-visible,.mwe-action:focus-visible{outline:3px solid rgba(15,98,254,.25);outline-offset:1px}
+.mwe-tool:disabled,.mwe-action:disabled,.mwe-menu button:disabled{opacity:.38;cursor:not-allowed;transform:none;box-shadow:none}
+.mwe-tool svg{display:block;margin:auto;filter:drop-shadow(0 3px 4px rgba(20,43,72,.12))}.mwe-tool span{display:block;font-size:11px;font-weight:600;margin-top:3px;white-space:nowrap}
+.mwe-sep{width:1px;height:54px;background:#d4dde6;margin:0 4px;flex:0 0 auto}
+.mwe-canvas-wrap{position:relative;flex:1;overflow:hidden;touch-action:none;background:radial-gradient(circle at 75% 0,rgba(120,169,255,.12),transparent 34%),linear-gradient(180deg,#f8fbff,#eef4f9)}
+.mwe-svg{display:block;width:100%;height:100%;cursor:grab;user-select:none}.mwe-svg.mwe-linking{cursor:crosshair}.mwe-svg.mwe-panning{cursor:grabbing}.mwe-grid{pointer-events:none;opacity:.8}
+.mwe-node{cursor:move;filter:drop-shadow(0 5px 7px rgba(25,45,70,.16));transition:filter .15s}.mwe-node:hover{filter:drop-shadow(0 8px 12px rgba(25,45,70,.22))}.mwe-node .mwe-shape{stroke-width:1.35;transition:stroke .15s,stroke-width .15s}.mwe-node.selected .mwe-shape{stroke:var(--mwe-blue);stroke-width:3}
+.mwe-node text{pointer-events:none;fill:var(--mwe-text);font-size:12px;font-weight:600;letter-spacing:.01em;paint-order:stroke;stroke:#f6f9fc;stroke-width:4px;stroke-linejoin:round}
+.mwe-port{fill:#fff;stroke:var(--mwe-blue);stroke-width:2;opacity:0;pointer-events:none;transition:opacity .15s}.mwe-node:hover .mwe-port,.mwe-node.selected .mwe-port{opacity:1}
+.mwe-edge{fill:none;stroke:#456b93;stroke-width:2;cursor:pointer;transition:stroke-width .15s,filter .15s}.mwe-edge.negative{stroke:#da1e28}.mwe-edge.selected{stroke-width:4;filter:drop-shadow(0 2px 2px rgba(15,98,254,.22))}.mwe-edge-hit{fill:none;stroke:transparent;stroke-width:14;cursor:pointer}.mwe-edge-label{font-size:11px;font-weight:600;fill:#44576b;paint-order:stroke;stroke:#f4f7fb;stroke-width:5px;stroke-linejoin:round}
+.mwe-status{position:absolute;left:14px;bottom:12px;padding:7px 11px;background:rgba(255,255,255,.94);border:1px solid var(--mwe-border);border-radius:999px;box-shadow:0 4px 14px rgba(24,45,72,.1);font-size:12px;color:var(--mwe-muted);pointer-events:none}
+.mwe-menu{position:absolute;z-index:20;display:none;min-width:210px;padding:6px;background:#fff;border:1px solid var(--mwe-border);border-radius:10px;box-shadow:0 14px 34px rgba(24,45,72,.22)}.mwe-menu button{display:block;width:100%;padding:10px 12px;border:0;background:#fff;color:var(--mwe-text);text-align:left;cursor:pointer;border-radius:6px}.mwe-menu button:hover:not(:disabled){background:#edf5ff;color:#0043ce}
+.mwe-toast{position:absolute;right:16px;bottom:16px;max-width:420px;padding:11px 15px;background:#172536;color:#fff;border-radius:8px;box-shadow:0 10px 28px rgba(0,0,0,.2);opacity:0;transform:translateY(8px);transition:.18s;pointer-events:none}.mwe-toast.show{opacity:1;transform:none}.mwe-toast.error{background:#b81922}
+.mwe-coordinate-overlay {position: absolute;top: 12px;right: 12px;z-index: 20;display: none;padding: 7px 12px;background: rgba(255, 255, 255, 0.94);border: 1px solid #c6c6c6;border-radius: 6px;box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);font-family: monospace;font-size: 13px;font-weight: 600;pointer-events: none;}
+.mwe-coordinate-overlay.show {display: flex;gap: 14px;}
+.mwe-coordinate-item {white-space: nowrap;}
+@media(max-width:900px){.mwe{border-radius:0}.mwe-toolbar{padding:7px}.mwe-tool,.mwe-action{min-width:58px;padding:6px}.mwe-tool span{font-size:10px}}
